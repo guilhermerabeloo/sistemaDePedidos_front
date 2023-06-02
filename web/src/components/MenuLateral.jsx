@@ -16,7 +16,7 @@ export function MenuLateral() {
     return (
             <div className="menu-lateral">
             <div id="btn-expandir" >
-                <BsList />
+                <BsList id="btn-exp"/>
             </div>
             <ul>
                 <li className="itens-menu">
