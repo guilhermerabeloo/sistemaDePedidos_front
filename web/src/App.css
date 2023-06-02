@@ -1,0 +1,203 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.container {
+    display: grid;
+    transition: .5s;
+    height: 100vh;
+    grid-template-columns: 65px 46% 46%;
+    grid-template-rows: 16% 79% 5%;
+    grid-template-areas:
+        'menu-lateral header header'
+        'menu-lateral content1 content2'
+        'menu-lateral footer footer';
+}
+
+.container.expandirGrid {
+    grid-template-columns: 240px 38% 38%;
+}
+
+.container div {
+    align-items: center;
+}
+
+/* Configuracoes do header */
+#header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 17% 50% 5% 20% 8%;
+    grid-template-areas:
+        'logo pesquisa config user-name user-image';
+}
+
+#header div {
+    justify-content: center;
+}
+
+#logo {
+    grid-area: logo;
+    text-align: center;
+}
+
+#pesquisa {
+    grid-area: pesquisa;
+    background-color: rgb(240, 240, 240);
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5VW;
+    height: 30px;
+    width: 32vw;
+}
+
+#pesquisa input {
+    height: 20px;
+    width: 25vw;
+    background: none;
+    border: none;
+}
+
+#pesquisa input:focus {
+    outline: none
+}
+
+#pesquisa button {
+    height: 24px;
+    width: 5vw;
+    border-radius: 10px;
+    background-color: #9b0303;
+    border: none;
+    color: aliceblue;
+}
+
+#pesquisa button {
+    cursor: pointer;
+}
+
+#pesquisa button:hover {
+    background-color: #e71717;
+}
+
+#pesquisa button:active {
+    transform: scale(0.95);
+}
+
+#config {
+    grid-area: config;
+    text-align: right;
+}
+
+#user-name {
+    grid-area: user-name;
+    text-align: right;
+}
+
+.user-image {
+    display: flex;
+    align-items: left;
+}
+
+#user-image {
+    grid-area: user-image;
+    border-radius: 50%;
+}
+
+/* Configuracoes do conteúdo */
+#content1 {
+    grid-area: content1;
+}
+
+#content2 {
+    grid-area: content2;
+}
+
+/* Configuracoes do rodapé */
+#footer {
+    grid-area: footer;
+    padding: 0%;
+    text-align: center;
+    font-size: 12px;
+}
+
+/* Configuracoes do menu lateral */
+
+.menu-lateral {
+    grid-area: menu-lateral;
+    background-color: #9b0303;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#btn-expandir {
+    background-color: #9b0303;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 20px;
+    margin-bottom: 60px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li a.item-menu:hover {
+    background: #730202;
+}
+
+ul li.itens-menu {
+    transition: 0.3s;
+}
+
+ul li ul li:hover {
+    background-color: #730202;
+}
+
+ul li a.ativo {
+    background-color: #730202;
+}
+
+ul li.itens-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+    padding: 5px 20px;
+    display: flex;
+    margin-bottom: 10px;
+    line-height: 40px;
+}
+
+ul li.itens-menu a span.txt-link {
+    margin-left: 40px;
+    font-size: 18px;
+}
+
+/* Subitens do menu */
+
+.menu-lateral ul li ul li a {
+    font-size: 15px;
+    padding: 0;
+    margin: 0 0 4px 120px;
+}
+
+.menu-lateral ul li ul {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.icon-subitens {
+    font-size: 15px;
+    margin-left: 11px;
+}
+
+.menu-lateral ul li ul.exibirItens {
+    max-height: 300px;
+    transition: max-height 0.5s ease-in;
+}
