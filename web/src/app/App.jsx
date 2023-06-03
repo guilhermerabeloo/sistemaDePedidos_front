@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 import { MenuLateral } from '../components/menuLateral';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   const [expandirGrid, setExpandirGrid] = useState(false);
@@ -13,15 +14,16 @@ function App() {
   }
 
   return (
-    <div className={`container ${expandirGrid ? 'expandirGrid' : ''}`} id="template-areas">
+      <div className={`container ${expandirGrid ? 'expandirGrid' : ''}`} id="template-areas">
         <Header />
         <MenuLateral propToggleExpandirGrid={toggleExpandirGrid} menuExpandido={menuExpandido}/>
         <div id="content1">
         </div>
         <div id="content2">
+        <Outlet />
         </div>
         <Footer />
-    </div>
+      </div>
   )
 }
 
