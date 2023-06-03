@@ -26,7 +26,7 @@ export function MenuLateral({ propToggleExpandirGrid, menuExpandido }) {
     return (
         <div className="menu-lateral">
             <div id="btn-expandir">
-                <BsList id="btn-exp" onClick={propToggleExpandirGrid}/>
+                <BsList id="btn-exp" onClick={() => {propToggleExpandirGrid(); setActiveSubMenu(null)}}/>
             </div>
             <ul>
                 <li className="itens-menu">
