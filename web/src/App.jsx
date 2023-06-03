@@ -1,13 +1,20 @@
-import './App.css'
+import './App.css';
+import { useState } from 'react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { MenuLateral } from './components/menuLateral';
 
 function App() {
+  const [expandirGrid, setExpandirGrid] = useState(false);
+
+  const toggleExpandirGrid = () => {
+    setExpandirGrid(!expandirGrid);
+  }
+
   return (
-    <div className="container" id="template-areas">
+    <div className={`container ${expandirGrid ? 'expandirGrid' : ''}`} id="template-areas">
         <Header />
-        <MenuLateral />
+        <MenuLateral propToggleExpandirGrid={toggleExpandirGrid}/>
         <div id="content1">
         </div>
         <div id="content2">

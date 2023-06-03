@@ -6,7 +6,8 @@ import { BsFillBagPlusFill } from "react-icons/bs";
 import { BsMenuUp } from "react-icons/bs";
 import { BsFillClipboardDataFill } from "react-icons/bs";
 
-export function MenuLateral() {
+// eslint-disable-next-line react/prop-types
+export function MenuLateral({ propToggleExpandirGrid }) {
     const [activeItem, setActiveItem] = useState(null);
 
     const selectLink = (itemId) => {
@@ -14,9 +15,9 @@ export function MenuLateral() {
     };
 
     return (
-            <div className="menu-lateral">
-            <div id="btn-expandir" >
-                <BsList id="btn-exp"/>
+        <div className="menu-lateral">
+            <div id="btn-expandir">
+                <BsList id="btn-exp" onClick={propToggleExpandirGrid}/>
             </div>
             <ul>
                 <li className="itens-menu">
