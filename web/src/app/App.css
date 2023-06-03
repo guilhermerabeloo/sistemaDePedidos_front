@@ -12,7 +12,7 @@
     grid-template-rows: 16% 79% 5%;
     grid-template-areas:
         'menu-lateral header header'
-        'menu-lateral content1 content2'
+        'menu-lateral content content'
         'menu-lateral footer footer';
 }
 
@@ -107,12 +107,8 @@
 }
 
 /* Configuracoes do conteúdo */
-#content1 {
-    grid-area: content1;
-}
-
-#content2 {
-    grid-area: content2;
+#content {
+    grid-area: content;
 }
 
 /* Configuracoes do rodapé */

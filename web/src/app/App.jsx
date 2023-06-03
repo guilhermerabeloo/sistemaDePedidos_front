@@ -17,11 +17,8 @@ function App() {
       <div className={`container ${expandirGrid ? 'expandirGrid' : ''}`} id="template-areas">
         <Header />
         <MenuLateral propToggleExpandirGrid={toggleExpandirGrid} menuExpandido={menuExpandido}/>
-        <div id="content1">
-        </div>
-        <div id="content2">
+        <div id="content"></div>
         <Outlet />
-        </div>
         <Footer />
       </div>
   )
