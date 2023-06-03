@@ -6,6 +6,7 @@ import { MenuLateral } from './components/menuLateral';
 
 function App() {
   const [expandirGrid, setExpandirGrid] = useState(false);
+  const menuExpandido = expandirGrid ? true : false;
 
   const toggleExpandirGrid = () => {
     setExpandirGrid(!expandirGrid);
@@ -14,7 +15,7 @@ function App() {
   return (
     <div className={`container ${expandirGrid ? 'expandirGrid' : ''}`} id="template-areas">
         <Header />
-        <MenuLateral propToggleExpandirGrid={toggleExpandirGrid}/>
+        <MenuLateral propToggleExpandirGrid={toggleExpandirGrid} menuExpandido={menuExpandido}/>
         <div id="content1">
         </div>
         <div id="content2">
