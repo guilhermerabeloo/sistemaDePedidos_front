@@ -1,8 +1,8 @@
 import './App.css';
 import { useState } from 'react';
-import { Footer } from './components/Footer';
-import { Header } from './components/Header';
-import { MenuLateral } from './components/menuLateral';
+import { Footer } from '../components/Footer';
+import { Header } from '../components/Header';
+import { MenuLateral } from '../components/menuLateral';
 
 function App() {
   const [expandirGrid, setExpandirGrid] = useState(false);

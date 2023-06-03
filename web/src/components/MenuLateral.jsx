@@ -15,7 +15,7 @@ export function MenuLateral({ propToggleExpandirGrid, menuExpandido }) {
         setActiveMenu(itemId);
 
         if(menuExpandido) {
-            if (activeMenu === itemId) {
+            if (activeMenu === itemId && activeSubMenu) {
                 setActiveSubMenu(null);
             } else {
                 setActiveSubMenu(itemId);
