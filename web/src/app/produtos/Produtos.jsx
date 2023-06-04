@@ -1,8 +1,9 @@
-import './produtos.css';
-import { BsPlusLg } from "react-icons/bs";
-import { BsFunnelFill } from "react-icons/bs";
+import './Produtos.css';
 import Modal from './Modal';
 import { useState } from 'react';
+
+import { BsPlusLg } from "react-icons/bs";
+import { BsFunnelFill } from "react-icons/bs";
 
 export default function Produtos() {
 

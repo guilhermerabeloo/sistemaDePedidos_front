@@ -1,0 +1,197 @@
+/* Configurações do fade */
+#fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+/* Configurações do modal */
+#modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    background-color: white;
+    z-index: 2;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#fade,
+#modal {
+    transition: 0.5s;
+    opacity: 1;
+    pointer-events: all;
+}
+
+#fade.hide,
+#modal.hide {
+    transition: 0.5s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#modal.hide {
+    top: 0;
+}
+
+#modal h2 {
+    margin-top: 1%;
+    color: rgb(73, 73, 73);
+    text-align: center;
+    margin: 2% 0 5% 0;
+}
+
+#modal button.btn-fecharModal {
+    position: absolute;
+    top: 4%;
+    right: 3.5%;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: rgb(73, 73, 73);
+}
+
+
+#modal form {
+    display: flex;
+    flex-direction: column;
+    color: rgb(51, 51, 51);
+    width: 50%;
+    height: 40%;
+    margin: 0 auto;
+}
+
+#modal form input {
+    margin-bottom: 11px;
+    outline: unset;
+    padding: 10px;
+    border: 1px solid rgb(51, 51, 51);
+    border-radius: 10px;
+}
+
+#modal form input[type=number]::-webkit-inner-spin-button, 
+#modal form input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+#modal form input:focus {
+    background-color: blanchedalmond;
+    font-weight: bold;
+}
+
+#modal form label {
+    margin-bottom: 5px;
+}
+
+#modal table.tabIngredientes {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 5%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
+    background-color: rgb(240, 240, 240);
+}
+
+#modal table.tabIngredientes caption {
+    text-align: start;
+    margin: 0 0 2% 10%;
+    font-weight: bold;
+    color: rgb(51, 51, 51);
+}
+
+#modal table.tabIngredientes th{
+    background-color: #9b0303;
+    color: white;
+}
+
+#modal table.tabIngredientes th:first-child{
+    border-top-left-radius: 10px;
+    width: 20%;
+}
+
+#modal table.tabIngredientes th:last-child{
+    border-top-right-radius: 10px;
+}
+
+#modal table.tabIngredientes tr{
+    height: 30px;
+    font-size: 13px;
+}
+
+#modal table.tabIngredientes td{
+    text-align: center;
+}
+
+#modal table.tabIngredientes input{
+    outline: unset;
+    padding: 10px;
+    border: none;/*1px solid rgb(51, 51, 51);*/
+    border-radius: 10px;
+}
+
+.codigo {
+    width: 30%;
+}
+
+.ingrediente {
+    width: 70%;
+}
+
+.inpCodigoIngrediente {
+    width: 98%;
+    box-sizing: border-box;
+}
+
+.inpIngrediente {
+    width: 98%;
+    box-sizing: border-box;
+}
+
+#modal table.tabIngredientes input[type=number]::-webkit-inner-spin-button, 
+#modal table.tabIngredientes input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.btn-AddIngrediente{
+    margin-top: 5px;
+    width: 150px;
+    background: none; 
+    position: fixed;
+    right: 18%;
+}
+
+.selecao-ingredientes {
+    margin-bottom: 40px;  
+}
+
+#modal button.btn-salvar {
+    margin: 0 0 5% 42.5%;
+    background-color: #730202;
+    color: white;
+    height: 5vh;
+    width: 15%;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+#modal button.btn-salvar i {
+    margin-right: 0.7vw;
+}
+
+#modal button.btn-salvar:active {
+    transform: scale(0.95);
+    transition: transform 0.2s ease-in-out;
+}
+
+#modal button.btn-salvar:hover {
+    background-color: #9b0303;
+}
