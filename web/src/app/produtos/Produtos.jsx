@@ -14,7 +14,7 @@ export default function Produtos() {
       <div id="contentProdutos">
             <div className="content-itens" id="infoProdutos">
                 <h3>Produtos</h3>
-                <button className="btn-novo" onClick={() => setActiveModal(true)}><BsPlusLg />Novo</button>
+                <button className="btn-novo" onClick={() => setActiveModal(true)}><BsPlusLg /> Novo</button>
                 <button className="btn-filter"><span className="filter"><BsFunnelFill /></span></button>
             </div>
             <div className="content-itens" id="tabProdutos">

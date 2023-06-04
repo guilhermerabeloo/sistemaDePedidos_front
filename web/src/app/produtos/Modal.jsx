@@ -3,11 +3,10 @@ import { BsXSquareFill } from "react-icons/bs";
 
 // eslint-disable-next-line react/prop-types
 export default function Modal({ isOpen, closeModal }) {
-    if(isOpen) {
         return (
             <div>
-                <div id="fade" className="" onClick={closeModal}></div>
-                <div id="modal" className="">
+                <div id="fade" className={isOpen ? '' : 'hide'} onClick={closeModal}></div>
+                <div id="modal" className={isOpen ? '' : 'hide'}>
                     <h2>Cadastro de produto</h2>
                     <button className="btn-fecharModal" onClick={closeModal}><BsXSquareFill /></button>
                     <form className="cadastroProduto">
@@ -31,11 +30,8 @@ export default function Modal({ isOpen, closeModal }) {
                             <td>Presunto</td>
                         </tr>
                     </table>
-                    <button className="btn-salvar"><BsPlusSquare />Salvar</button>
+                    <button className="btn-salvar"><BsPlusSquare /> Salvar</button>
                 </div>
             </div>
         )
-    }
-
-    return null
 }
