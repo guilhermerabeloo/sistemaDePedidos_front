@@ -141,7 +141,11 @@
 }
 
 .ingrediente {
-    width: 70%;
+    width: 60%;
+}
+
+.excluiLinha {
+    width: 10%;
 }
 
 .inpCodigoIngrediente {
@@ -152,6 +156,29 @@
 .inpIngrediente {
     width: 98%;
     box-sizing: border-box;
+}
+
+.deleteRow {
+    color: #9b0303;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.deleteRow.disabled {
+    opacity: .5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.deleteRow:active {
+    transform: scale(0.95);
+    transition: transform 0.2s ease-in-out;
+}
+
+.deleteRow:hover {
+    color: #9b0303;
+    cursor: pointer;
+    opacity: .8;
 }
 
 #modal table.tabIngredientes input[type=number]::-webkit-inner-spin-button, 

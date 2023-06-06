@@ -3,6 +3,8 @@ import './Modal.css'
 import { BsPlusSquare } from "react-icons/bs";
 import { BsXSquareFill } from "react-icons/bs";
 import { BsPlusLg } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
+
 
 // eslint-disable-next-line react/prop-types
 export default function Modal({ isOpen, closeModal }) {
@@ -13,14 +15,20 @@ export default function Modal({ isOpen, closeModal }) {
             setIngredientes([...ingredientes, {codigo: "", ingrediente: ""}])
             setIndex(index + 1);
         };
+
+        const excluiIngrediente = (index) => {
+            const novosIngredientes = [...ingredientes];
+            console.log(index)
+            novosIngredientes.splice(index, 1);
+            setIngredientes(novosIngredientes);
+        };
         
         const handleChange = (index, event) => {
-            console.log('oi')
             const { name, value } = event.target;
             const novosIngredientes = [...ingredientes];
             novosIngredientes[index][name] = value;
             setIngredientes(novosIngredientes);
-        }
+        };
 
     return (
         <div>
@@ -45,6 +53,7 @@ export default function Modal({ isOpen, closeModal }) {
                             <tr>
                                 <th className="codigo">Codigo</th>
                                 <th className="ingrediente">Ingrediente</th>
+                                <th className="excluiLinha"></th>
                             </tr>
                             {ingredientes.map((ingrediente, index) => (
                                 <tr key={index}>
@@ -64,6 +73,12 @@ export default function Modal({ isOpen, closeModal }) {
                                             name="ingrediente" 
                                             value={ingrediente.ingrediente} 
                                             onChange={(event) => handleChange(index, event)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <BsFillTrash3Fill 
+                                            className={`deleteRow ${ingredientes.length === 1 ? 'disabled' : ''}`}
+                                            onClick={() => excluiIngrediente(index)}
                                         />
                                     </td>
                                 </tr>
