@@ -47,44 +47,45 @@ export default function Modal({ isOpen, closeModal }) {
                     <input type="text" id="preco" placeholder="R$ 26,00..."/>
                 </form>
                 <div className="selecao-ingredientes">
-                    <table className="tabIngredientes">
-                        <caption>Ingredientes</caption>
-                        <tbody>
-                            <tr>
-                                <th className="codigo">Codigo</th>
-                                <th className="ingrediente">Ingrediente</th>
-                                <th className="excluiLinha"></th>
-                            </tr>
-                            {ingredientes.map((ingrediente, index) => (
-                                <tr key={index}>
-                                    <td className="codigo">
-                                        <input 
-                                            className="inpCodigoIngrediente"
-                                            type="number" 
-                                            name="codigo" 
-                                            value={ingrediente.codigo} 
-                                            onChange={(event) => handleChange(index, event)}
-                                        />
-                                    </td>
-                                    <td className="ingrediente">
-                                        <input 
-                                            className="inpIngrediente"
-                                            type="text" 
-                                            name="ingrediente" 
-                                            value={ingrediente.ingrediente} 
-                                            onChange={(event) => handleChange(index, event)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <BsFillTrash3Fill 
-                                            className={`deleteRow ${ingredientes.length === 1 ? 'disabled' : ''}`}
-                                            onClick={() => excluiIngrediente(index)}
-                                        />
-                                    </td>
+                    <div className="ingredientes-container">
+                        <table className="tabIngredientes">
+                            <tbody>
+                                <tr>
+                                    <th className="codigo">Codigo</th>
+                                    <th className="ingrediente">Ingrediente</th>
+                                    <th className="excluiLinha"></th>
                                 </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                                {ingredientes.map((ingrediente, index) => (
+                                    <tr key={index}>
+                                        <td className="codigo">
+                                            <input 
+                                                className="inpCodigoIngrediente"
+                                                type="number" 
+                                                name="codigo" 
+                                                value={ingrediente.codigo} 
+                                                onChange={(event) => handleChange(index, event)}
+                                            />
+                                        </td>
+                                        <td className="ingrediente">
+                                            <input 
+                                                className="inpIngrediente"
+                                                type="text" 
+                                                name="ingrediente" 
+                                                value={ingrediente.ingrediente} 
+                                                onChange={(event) => handleChange(index, event)}
+                                            />
+                                        </td>
+                                        <td>
+                                            <BsFillTrash3Fill 
+                                                className={`deleteRow ${ingredientes.length === 1 ? 'disabled' : ''}`}
+                                                onClick={() => excluiIngrediente(index)}
+                                            />
+                                        </td>
+                                    </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
                     <button className="btn-AddIngrediente" onClick={() => adicionaIngrediente()}><BsPlusLg /> Adicionar ingrediente</button>
                 </div>
                 <button className="btn-salvar"><BsPlusSquare /> Salvar</button>

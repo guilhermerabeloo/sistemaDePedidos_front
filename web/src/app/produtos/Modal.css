@@ -12,10 +12,11 @@
 /* Configurações do modal */
 #modal {
     position: fixed;
+    max-height: 90%;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 60%;
+    width: 50%;
     background-color: white;
     z-index: 2;
     border-radius: 10px;
@@ -44,7 +45,7 @@
     margin-top: 1%;
     color: rgb(73, 73, 73);
     text-align: center;
-    margin: 2% 0 5% 0;
+    margin: 2% 0 2% 0;
 }
 
 #modal button.btn-fecharModal {
@@ -65,12 +66,13 @@
     width: 50%;
     height: 40%;
     margin: 0 auto;
+    margin-bottom: 2%;
 }
 
 #modal form input {
-    margin-bottom: 11px;
+    margin-bottom: 7px;
     outline: unset;
-    padding: 10px;
+    padding: 7px;
     border: 1px solid rgb(51, 51, 51);
     border-radius: 10px;
 }
@@ -87,13 +89,13 @@
 }
 
 #modal form label {
-    margin-bottom: 5px;
+    margin-bottom: 1px;
+    font-size: 13px
 }
 
 #modal table.tabIngredientes {
-    width: 70%;
+    width: 98%;
     margin: 0 auto;
-    margin-top: 5%;
     border-radius: 10px;
     box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
     background-color: rgb(240, 240, 240);
@@ -192,11 +194,30 @@
     width: 150px;
     background: none; 
     position: fixed;
-    right: 18%;
+    right: 8%;
 }
 
 .selecao-ingredientes {
-    margin-bottom: 40px;  
+    margin-bottom: 40px; 
+    align: center;
+}
+
+.ingredientes-container {
+    max-height: 34vh;
+    overflow-y: auto;
+    width: 70%;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.ingredientes-container::-webkit-scrollbar {
+    width: 15px;
+    background-color: #f5f5f5;
+}
+
+.ingredientes-container::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 10px;
 }
 
 #modal button.btn-salvar {
