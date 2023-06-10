@@ -2,6 +2,7 @@ import './Modal.css'
 import { useState } from 'react';
 import { api } from '../../lib/api';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import { BsPlusSquare } from "react-icons/bs";
 import { BsXSquareFill } from "react-icons/bs";
@@ -10,14 +11,15 @@ import { BsFillTrash3Fill } from "react-icons/bs";
 
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  atualizaTabela: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.string)
   ).isRequired
 };
 
-export default function Modal({ isOpen, closeModal, options }) {
-    const [ingredientes, setIngredientes] = useState([{codigo: "", ingrediente: ""}]);
+export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
+    const [ingredientes, setIngredientes] = useState([{codigo: "", ingrediente: "Selecione"}]);
     const [index, setIndex] = useState(0);
 
     const adicionaIngrediente = () => {
@@ -88,9 +90,17 @@ export default function Modal({ isOpen, closeModal, options }) {
                     Ingredientes: codigos
                 }
             )
-            window.location.reload();
+            toast.success('Produto cadastrado com sucesso!', {
+                autoClose: 3000,
+            });
+            closeModal(true);
+            atualizaTabela(true);
+            setForm({produto: '', categoria: '', preco: ''});
+            setIngredientes([{ codigo: '', ingrediente: 'Selecione' }]);
         } catch (erro) {
-            console.log(erro)
+            toast.error('Erro ao cadastrar o produto.', {
+                autoClose: 3000,
+            });
         }
     }
 
@@ -107,6 +117,7 @@ export default function Modal({ isOpen, closeModal, options }) {
                         id="produto" 
                         placeholder="Ex: Portuguesa..."
                         onChange={onChangeProduto}
+                        value={form.produto}
                     />
                     <label htmlFor="categoria">Categoria:</label>
                     <input 
@@ -115,6 +126,7 @@ export default function Modal({ isOpen, closeModal, options }) {
                         id="categoria" 
                         placeholder="Ex: Pizza..."
                         onChange={onChangeProduto}
+                        value={form.categoria}
                     />
                     <label htmlFor="preco">Preço:</label>
                     <input 
@@ -123,6 +135,7 @@ export default function Modal({ isOpen, closeModal, options }) {
                         id="preco" 
                         placeholder="R$ 26,00..."
                         onChange={onChangeProduto}
+                        value={form.preco}
                     />
                     <div className="selecao-ingredientes">
                         <div className="ingredientes-container">
@@ -149,7 +162,7 @@ export default function Modal({ isOpen, closeModal, options }) {
                                                     name="ingrediente" 
                                                     onChange={(event) => handleChange(index, event)}
                                                 >
-                                                    <option key=""> Selecione</option>
+                                                    <option key="">Selecione</option>
                                                     {options.map(option => (
                                                         <option key={option[1]} value={option[1]}>{option[1]}</option>
                                                     ))}
