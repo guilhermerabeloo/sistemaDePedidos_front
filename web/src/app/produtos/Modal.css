@@ -41,13 +41,6 @@
     top: 0;
 }
 
-#modal h2 {
-    margin-top: 1%;
-    color: rgb(73, 73, 73);
-    text-align: center;
-    margin: 2% 0 2% 0;
-}
-
 #modal button.btn-fecharModal {
     position: absolute;
     top: 4%;
@@ -65,6 +58,7 @@
     color: rgb(51, 51, 51);
     margin: 0 auto;
     margin-bottom: 2%;
+    margin-top: 6%;
 }
 
 #modal form input {
@@ -132,7 +126,8 @@
     text-align: center;
 }
 
-#modal table.tabIngredientes input{
+#modal table.tabIngredientes input,
+#modal table.tabIngredientes select {
     outline: unset;
     padding: 10px;
     border: none;
@@ -142,6 +137,7 @@
 
 .codigo {
     width: 30%;
+    pointer-events: none;
 }
 
 .ingrediente {

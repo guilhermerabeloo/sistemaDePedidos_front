@@ -1,17 +1,41 @@
 import './Produtos.css';
 import Modal from './Modal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { api } from '../../lib/api';
 
 import { BsPlusLg } from "react-icons/bs";
 import { BsFunnelFill } from "react-icons/bs";
 
 export default function Produtos() {
 
+  const [options, setOptions] = useState(['', '']);
+
+  useEffect(() => {
+      async function getIngredientes() {
+          try {
+              const response = await api.get(
+                  '/ingredientes'
+              )
+
+              const data = response.data.data;
+              const ingredientesOption = data.map((ingrediente) => {
+                  return [ingrediente.idingrediente, ingrediente.ingrediente]
+              })
+              
+              setOptions(ingredientesOption)
+          } catch(error) {
+              console.log(error)
+          }
+      }
+
+      getIngredientes()
+  }, [])
+
   const [ activeModal, setActiveModal ] = useState(false);
 
   return (
     <div id='content'>
-      <Modal isOpen={activeModal} closeModal={() => setActiveModal(!activeModal)}/>
+      <Modal isOpen={activeModal} options={options} closeModal={() => setActiveModal(!activeModal)}/>
       <div id="contentProdutos">
             <div className="content-itens" id="infoProdutos">
                 <h3>Produtos</h3>

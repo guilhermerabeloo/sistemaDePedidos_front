@@ -1,14 +1,22 @@
 import './Modal.css'
 import { useState } from 'react';
 import { api } from '../../lib/api';
+import PropTypes from 'prop-types';
 
 import { BsPlusSquare } from "react-icons/bs";
 import { BsXSquareFill } from "react-icons/bs";
 import { BsPlusLg } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
 
-// eslint-disable-next-line react/prop-types
-export default function Modal({ isOpen, closeModal }) {
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ).isRequired
+};
+
+export default function Modal({ isOpen, closeModal, options }) {
     const [ingredientes, setIngredientes] = useState([{codigo: "", ingrediente: ""}]);
     const [index, setIndex] = useState(0);
 
@@ -19,7 +27,6 @@ export default function Modal({ isOpen, closeModal }) {
 
     const excluiIngrediente = (index) => {
         const novosIngredientes = [...ingredientes];
-        console.log(index)
         novosIngredientes.splice(index, 1);
         setIngredientes(novosIngredientes);
     };
@@ -28,6 +35,16 @@ export default function Modal({ isOpen, closeModal }) {
         const { name, value } = event.target;
         const novosIngredientes = [...ingredientes];
         novosIngredientes[index][name] = value;
+
+        if(name === 'ingrediente') {
+            const ingredienteSelecionado = options.find(option => option[1] === value);
+
+            if(ingredienteSelecionado) {
+                novosIngredientes[index].codigo = ingredienteSelecionado[0];
+            } else {
+                novosIngredientes[index].codigo = '';
+            }
+        }
         setIngredientes(novosIngredientes);
     };
 
@@ -80,7 +97,6 @@ export default function Modal({ isOpen, closeModal }) {
         <div>
             <div id="fade" className={isOpen ? '' : 'hide'} onClick={closeModal}></div>
             <div id="modal" className={isOpen ? '' : 'hide'}>
-                <h2>Cadastro de produto</h2>
                 <button className="btn-fecharModal" onClick={closeModal}><BsXSquareFill /></button>
                 <form className="cadastroProduto" onSubmit={cadastraProduto}>
                     <label htmlFor="produto">Produto: </label>
@@ -123,18 +139,20 @@ export default function Modal({ isOpen, closeModal }) {
                                                     className="inpCodigoIngrediente"
                                                     type="number" 
                                                     name="codigo" 
-                                                    value={ingrediente.codigo} 
+                                                    value={ingrediente.codigo || ''} 
                                                     onChange={(event) => handleChange(index, event)}
                                                 />
                                             </td>
                                             <td className="ingrediente">
-                                                <input 
-                                                    className="inpIngrediente"
-                                                    type="text" 
+                                                <select
                                                     name="ingrediente" 
-                                                    value={ingrediente.ingrediente} 
                                                     onChange={(event) => handleChange(index, event)}
-                                                />
+                                                >
+                                                    <option key=""> Selecione</option>
+                                                    {options.map(option => (
+                                                        <option key={option[1]} value={option[1]}>{option[1]}</option>
+                                                    ))}
+                                                </select>
                                             </td>
                                             <td>
                                                 <BsFillTrash3Fill 
