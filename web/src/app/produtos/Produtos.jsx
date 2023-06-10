@@ -7,84 +7,86 @@ import { BsPlusLg } from "react-icons/bs";
 import { BsFunnelFill } from "react-icons/bs";
 
 export default function Produtos() {
+    const [produtos, setProdutos] = useState([{idproduto: "", produto: "", idcategoria: "", categoria: "", preco: ""}])
 
-  const [options, setOptions] = useState(['', '']);
+    useEffect(() => {
+        async function getProdutos() {
+            try {
+                const response = await api.get(
+                    '/produtos'
+                )
 
-  useEffect(() => {
-      async function getIngredientes() {
-          try {
-              const response = await api.get(
-                  '/ingredientes'
-              )
+                const data = response.data.data;
+                setProdutos(data);
+            } catch(error) {
+                console.log(error)
+            }
+        }
 
-              const data = response.data.data;
-              const ingredientesOption = data.map((ingrediente) => {
-                  return [ingrediente.idingrediente, ingrediente.ingrediente]
-              })
-              
-              setOptions(ingredientesOption)
-          } catch(error) {
-              console.log(error)
-          }
-      }
+        getProdutos()
+    }, [])
 
-      getIngredientes()
-  }, [])
+    const [options, setOptions] = useState(['', '']);
 
-  const [ activeModal, setActiveModal ] = useState(false);
+    useEffect(() => {
+        async function getIngredientes() {
+            try {
+                const response = await api.get(
+                    '/ingredientes'
+                )
 
-  return (
-    <div id='content'>
-      <Modal isOpen={activeModal} options={options} closeModal={() => setActiveModal(!activeModal)}/>
-      <div id="contentProdutos">
-            <div className="content-itens" id="infoProdutos">
-                <h3>Produtos</h3>
-                <button className="btn-novo" onClick={() => setActiveModal(true)}><BsPlusLg /> Novo</button>
-                <button className="btn-filter"><span className="filter"><BsFunnelFill /></span></button>
-            </div>
-            <div className="content-itens" id="tabProdutos">
-                <table>
-                  <tbody>
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Produto</th>
-                        <th>Categoria</th>
-                        <th>Valor</th>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>Portuguesa</td>
-                        <td>Pizza</td>
-                        <td>26.5</td>
-                    </tr>
-                    <tr>
-                        <td>02</td>
-                        <td>Calabresa</td>
-                        <td>Pizza</td>
-                        <td>24.00</td>
-                    </tr>
-                    <tr>
-                        <td>03</td>
-                        <td>Mussarela</td>
-                        <td>Pizza</td>
-                        <td>24.00</td>
-                    </tr>
-                    <tr>
-                        <td>04</td>
-                        <td>Frango</td>
-                        <td>Coxinha</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>05</td>
-                        <td>Carne do sol com catupiry</td>
-                        <td>Esfiha aberta</td>
-                        <td>2.00</td>
-                    </tr>
-                  </tbody>
-                </table>
+                const data = response.data.data;
+                const ingredientesOption = data.map((ingrediente) => {
+                    return [ingrediente.idingrediente, ingrediente.ingrediente]
+                })
+                
+                setOptions(ingredientesOption)
+            } catch(error) {
+                console.log(error)
+            }
+        }
+
+        getIngredientes()
+    }, [])
+
+    const [ activeModal, setActiveModal ] = useState(false);
+
+    return (
+        <div id='content'>
+        <Modal isOpen={activeModal} options={options} closeModal={() => setActiveModal(!activeModal)}/>
+        <div id="contentProdutos">
+                <div className="content-itens" id="infoProdutos">
+                    <h3>Produtos</h3>
+                    <button className="btn-novo" onClick={() => setActiveModal(true)}><BsPlusLg /> Novo</button>
+                    <button className="btn-filter"><span className="filter"><BsFunnelFill /></span></button>
+                </div>
+                <div className="content-itens" id="tabProdutos">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Produto</th>
+                                <th>idCategoria</th>
+                                <th>Categoria</th>
+                                <th>Valor</th>
+                            </tr>
+                            {produtos.map((produto, index) => {
+                                {console.log(produto)}
+
+                                return (
+                                    <tr key={index}>
+                                        <td>{produto.idproduto}</td>
+                                        <td>{produto.produto}</td>
+                                        <td>{produto.idcategoria}</td>
+                                        <td>{produto.categoria}</td>
+                                        <td>{produto.preco}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-  )
+    )
 }

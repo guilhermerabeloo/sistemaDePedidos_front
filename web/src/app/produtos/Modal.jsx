@@ -88,6 +88,7 @@ export default function Modal({ isOpen, closeModal, options }) {
                     Ingredientes: codigos
                 }
             )
+            window.location.reload();
         } catch (erro) {
             console.log(erro)
         }
