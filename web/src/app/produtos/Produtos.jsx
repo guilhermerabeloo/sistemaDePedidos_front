@@ -29,7 +29,7 @@ export default function Produtos() {
         getProdutos()
     }, [atualizaTabela])
 
-    const [options, setOptions] = useState(['', '']);
+    const [options, setOptions] = useState(['', 'Selecione']);
 
     useEffect(() => {
         async function getIngredientes() {
@@ -42,8 +42,9 @@ export default function Produtos() {
                 const ingredientesOption = data.map((ingrediente) => {
                     return [ingrediente.idingrediente, ingrediente.ingrediente]
                 })
-                
-                setOptions(ingredientesOption)
+                const optionsWithDefault = [["", "Selecione"], ...ingredientesOption]
+
+                setOptions(optionsWithDefault)
             } catch(error) {
                 console.log(error)
             }

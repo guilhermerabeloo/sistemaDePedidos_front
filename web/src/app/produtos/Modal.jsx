@@ -73,7 +73,7 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
         const codigos = ingredientes.map((ingrediente) => {
             return ingrediente.codigo
         });
-
+        
         setForm({
             produto: event.target.elements.produto.value,
             categoria: event.target.elements.categoria.value,
@@ -90,18 +90,23 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
                     Ingredientes: codigos
                 }
             )
-            toast.success('Produto cadastrado com sucesso!', {
-                autoClose: 3000,
-            });
+
             closeModal(true);
             atualizaTabela(true);
             setForm({produto: '', categoria: '', preco: ''});
             setIngredientes([{ codigo: '', ingrediente: 'Selecione' }]);
+            const select = document.getElementsByClassName('selectIngredientes')[0];
+            select.selectedIndex = 'Selecione'
+
+            toast.success('Produto cadastrado com sucesso!', {
+                autoClose: 3000,
+            });
         } catch (erro) {
             toast.error('Erro ao cadastrar o produto.', {
                 autoClose: 3000,
             });
         }
+        
     }
 
     return (
@@ -159,12 +164,12 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
                                             </td>
                                             <td className="ingrediente">
                                                 <select
+                                                    className='selectIngredientes'
                                                     name="ingrediente" 
                                                     onChange={(event) => handleChange(index, event)}
                                                 >
-                                                    <option key="">Selecione</option>
                                                     {options.map(option => (
-                                                        <option key={option[1]} value={option[1]}>{option[1]}</option>
+                                                        <option key={option[0]} value={option[1]}>{option[1]}</option>
                                                     ))}
                                                 </select>
                                             </td>
