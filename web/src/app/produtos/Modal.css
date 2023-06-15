@@ -61,14 +61,26 @@
     margin-top: 6%;
 }
 
-#modal form input {
+#modal form input,
+#modal form select {
     margin: 0 auto;
     margin-bottom: 7px;
-    width: 50%;
     outline: unset;
     padding: 7px;
     border: 1px solid rgb(51, 51, 51);
     border-radius: 10px;
+}
+
+#modal form input {
+    width: 50%;
+}
+
+#modal form select {
+    width: 53%;
+}
+
+#codCategoria {
+    display: none;
 }
 
 #modal form input[type=number]::-webkit-inner-spin-button, 

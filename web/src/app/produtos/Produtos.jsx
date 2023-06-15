@@ -53,11 +53,43 @@ export default function Produtos() {
         getIngredientes()
     }, [])
 
+    const [ optionsCategoria, setOptionsCategoria ] = useState([0, 'Selecione']);
+
+    useEffect(() => {
+        async function getCategorias() {
+            try {
+                const response = await api.get(
+                    '/categorias'
+                )
+
+                const data = response.data.data;
+                const categoriasOptions = data.map((categoria) => {
+                    return [categoria.idcategoria, categoria.categoria]
+                });
+
+                const optionComPadrao = [[0, 'Selecione'], ...categoriasOptions]
+
+                setOptionsCategoria(optionComPadrao)
+            } catch(error) {
+                console.log(error)
+            }
+        }
+
+        getCategorias()
+
+    }, [])
+    
     const [ activeModal, setActiveModal ] = useState(false);
 
     return (
         <div id='content'>
-        <Modal isOpen={activeModal} atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} options={options} closeModal={() => setActiveModal(!activeModal)}/>
+        <Modal 
+            isOpen={activeModal} 
+            atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} 
+            options={options} 
+            optionsCategoria={optionsCategoria}
+            closeModal={() => setActiveModal(!activeModal)}
+        />
             <div id="contentProdutos">
                 <div className="content-itens" id="infoProdutos">
                     <h3>Produtos</h3>

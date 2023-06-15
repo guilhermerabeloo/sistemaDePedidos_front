@@ -1,7 +1,7 @@
 import './Modal.css'
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { api } from '../../lib/api';
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
 import { BsPlusSquare } from "react-icons/bs";
@@ -15,10 +15,13 @@ Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.string)
+  ).isRequired,
+  optionsCategoria: PropTypes.arrayOf(
+    PropTypes.arrayOf(PropTypes.string)
   ).isRequired
 };
 
-export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
+export default function Modal({ isOpen, closeModal, options, atualizaTabela, optionsCategoria }) {
     const [ingredientes, setIngredientes] = useState([{codigo: "", ingrediente: "Selecione"}]);
     const [index, setIndex] = useState(0);
 
@@ -52,11 +55,13 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
 
     const [ form, setForm ] = useState({
         produto: '',
-        categoria: '',
+        codCategoria: 0,
+        categoria: 'Selecione',
         preco: '',
     });
 
     const onChangeProduto = (event) => {
+        
         const { name, value } = event.target;
 
         setForm((formAntigo) => {
@@ -65,6 +70,18 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
             
             return formAtualizado
         });
+    }
+
+    const onChangeCategoria = (event) => {
+        optionsCategoria.forEach((option) => {
+           if(option[1] === event.target.value) {
+                const formAtualizado = { ...form }
+                formAtualizado.codCategoria = option[0]
+
+                setForm(formAtualizado)
+           }
+        })
+
     }
 
     const cadastraProduto = async (event) => {
@@ -76,6 +93,7 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
         
         setForm({
             produto: event.target.elements.produto.value,
+            codCategoria: event.target.elements.codCategoria.value,
             categoria: event.target.elements.categoria.value,
             preco: event.target.elements.preco.value,
         })
@@ -85,7 +103,7 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
                 '/cadastraProduto',
                 {
                     Produto: form.produto,
-                    Categoria: form.categoria,
+                    Categoria: form.codCategoria,
                     Preco: form.preco,
                     Ingredientes: codigos
                 }
@@ -93,8 +111,9 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
 
             closeModal(true);
             atualizaTabela(true);
-            setForm({produto: '', categoria: '', preco: ''});
+            setForm({produto: '', codCategoria: 0, categoria: 'Selecione', preco: ''});
             setIngredientes([{ codigo: '', ingrediente: 'Selecione' }]);
+
             const select = document.getElementsByClassName('selectIngredientes')[0];
             select.selectedIndex = 'Selecione'
 
@@ -127,12 +146,20 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela }) {
                     <label htmlFor="categoria">Categoria:</label>
                     <input 
                         type="text" 
-                        name="categoria" 
-                        id="categoria" 
-                        placeholder="Ex: Pizza..."
+                        name="codCategoria" 
+                        id="codCategoria" 
                         onChange={onChangeProduto}
-                        value={form.categoria}
+                        value={form.codCategoria}
                     />
+                    <select
+                        className='selectCategorias'
+                        name='categoria'
+                        onChange={onChangeCategoria}
+                    >
+                        {optionsCategoria.map(option => (
+                            <option key={option[0]} value={option[1]}>{option[1]}</option>
+                        ))}
+                    </select>
                     <label htmlFor="preco">Preço:</label>
                     <input 
                         type="text" 
