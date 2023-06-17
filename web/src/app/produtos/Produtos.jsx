@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { BsPlusLg } from "react-icons/bs";
 import { BsFunnelFill } from "react-icons/bs";
+import { ModalExclusao } from '../../components/ModalExclusao';
 
 export default function Produtos() {
     const [produtos, setProdutos] = useState([{idproduto: "", produto: "", idcategoria: "", categoria: "", preco: ""}])
@@ -90,6 +91,7 @@ export default function Produtos() {
             optionsCategoria={optionsCategoria}
             closeModal={() => setActiveModal(!activeModal)}
         />
+        <ModalExclusao />
             <div id="contentProdutos">
                 <div className="content-itens" id="infoProdutos">
                     <h3>Produtos</h3>
