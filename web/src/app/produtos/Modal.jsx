@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { api } from '../../lib/api';
 import { toast } from 'react-toastify';
+import { v4 as uuidv4 } from 'uuid';
 
 import { BsPlusSquare } from "react-icons/bs";
 import { BsXSquareFill } from "react-icons/bs";
@@ -22,7 +23,7 @@ Modal.propTypes = {
 };
 
 export default function Modal({ isOpen, closeModal, options, atualizaTabela, optionsCategoria }) {
-    const [ingredientes, setIngredientes] = useState([{codigo: "", ingrediente: "Selecione"}]);
+    const [ingredientes, setIngredientes] = useState([{ id: uuidv4(), codigo: "", ingrediente: "Selecione"}]);
     const [index, setIndex] = useState(0);
 
     const adicionaIngrediente = () => {
@@ -33,6 +34,7 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela, opt
     const excluiIngrediente = (index) => {
         const novosIngredientes = [...ingredientes];
         novosIngredientes.splice(index, 1);
+        console.log(novosIngredientes)
         setIngredientes(novosIngredientes);
     };
     
@@ -125,7 +127,6 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela, opt
                 autoClose: 3000,
             });
         }
-        
     }
 
     return (
@@ -179,7 +180,7 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela, opt
                                         <th className="excluiLinha"></th>
                                     </tr>
                                     {ingredientes.map((ingrediente, index) => (
-                                        <tr key={index}>
+                                        <tr key={ingrediente.id}>
                                             <td className="codigo">
                                                 <input 
                                                     className="inpCodigoIngrediente"
@@ -194,6 +195,7 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela, opt
                                                     className='selectIngredientes'
                                                     name="ingrediente" 
                                                     onChange={(event) => handleChange(index, event)}
+                                                    value={ingrediente.ingrediente}
                                                 >
                                                     {options.map(option => (
                                                         <option key={option[0]} value={option[1]}>{option[1]}</option>

@@ -52,7 +52,7 @@ p {
     margin-bottom: 1.8rem;
 }
 
-button {
+.action button {
     color: white;
     height: 5vh;
     width: 6vw;
