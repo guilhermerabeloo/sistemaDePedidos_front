@@ -97,3 +97,32 @@
     background-color: #aaa;
     border-radius: 10px;
 }
+
+.btn-actions {
+    width: 60px;
+}
+
+.btn-edit,
+.btn-delete {
+    margin-left: 10px;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.btn-edit:hover,
+.btn-delete:hover {
+    opacity: 0.8;
+}
+
+.btn-edit:active,
+.btn-delete:active {
+    transform: scale(0.95)
+}
+
+.btn-edit {
+    color: #191970;
+}
+
+.btn-delete {
+    color: #9b0303;
+}

@@ -1,5 +1,7 @@
 import './Produtos.css';
 import Modal from './Modal';
+import { ModalExclusao } from '../../components/ModalExclusao';
+
 import { useState, useEffect } from 'react';
 import { api } from '../../lib/api';
 import { ToastContainer } from 'react-toastify';
@@ -7,7 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { BsPlusLg } from "react-icons/bs";
 import { BsFunnelFill } from "react-icons/bs";
-import { ModalExclusao } from '../../components/ModalExclusao';
+import { BsBackspace } from "react-icons/bs";
+import { BsPencilSquare } from "react-icons/bs";
 
 export default function Produtos() {
     const [produtos, setProdutos] = useState([{idproduto: "", produto: "", idcategoria: "", categoria: "", preco: ""}])
@@ -81,6 +84,13 @@ export default function Produtos() {
     }, [])
     
     const [ activeModal, setActiveModal ] = useState(false);
+    const [ exclusao, setExclusao ] = useState(false);
+    const [ idDeleteProduto, setIdDeleteProduto ] = useState(null);
+
+    const handleClickExclusao = (idProduto) => {
+        setIdDeleteProduto(idProduto);
+        setExclusao(!exclusao);
+    }
 
     return (
         <div id='content'>
@@ -91,7 +101,12 @@ export default function Produtos() {
             optionsCategoria={optionsCategoria}
             closeModal={() => setActiveModal(!activeModal)}
         />
-        <ModalExclusao />
+        <ModalExclusao 
+            exclusao={exclusao}
+            atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} 
+            idProduto={idDeleteProduto}
+            closeExclusao={() => setExclusao(!exclusao)}
+        />
             <div id="contentProdutos">
                 <div className="content-itens" id="infoProdutos">
                     <h3>Produtos</h3>
@@ -107,6 +122,7 @@ export default function Produtos() {
                                 <th>idCategoria</th>
                                 <th>Categoria</th>
                                 <th>Valor</th>
+                                <th></th>
                             </tr>
                             {produtos.map((produto) => {
                                 return (
@@ -116,6 +132,10 @@ export default function Produtos() {
                                         <td>{produto.idcategoria}</td>
                                         <td>{produto.categoria}</td>
                                         <td>{produto.preco}</td>
+                                        <td className="btn-actions">
+                                            <BsPencilSquare className="btn-edit"/>
+                                            <BsBackspace className="btn-delete" onClick={() => handleClickExclusao(produto.idproduto)}/>
+                                        </td>
                                     </tr>
                                 )
                             })}
