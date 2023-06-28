@@ -1,5 +1,6 @@
 import './Produtos.css';
 import Modal from './Modal';
+import ModalEdicao from './ModalEdicao';
 import { ModalExclusao } from '../../components/ModalExclusao';
 
 import { useState, useEffect } from 'react';
@@ -13,8 +14,15 @@ import { BsBackspace } from "react-icons/bs";
 import { BsPencilSquare } from "react-icons/bs";
 
 export default function Produtos() {
-    const [produtos, setProdutos] = useState([{idproduto: "", produto: "", idcategoria: "", categoria: "", preco: ""}])
-    const [atualizaTabela, setAtualizaTabela] = useState(false)
+    const [ produtos, setProdutos ] = useState([{idproduto: "", produto: "", idcategoria: "", categoria: "", preco: ""}])
+    const [ atualizaTabela, setAtualizaTabela ] = useState(false)
+    const [ optionsIngredientes, setOptionsIngredientes ] = useState(['', 'Selecione']);
+    const [ optionsCategoria, setOptionsCategoria ] = useState([0, 'Selecione']);
+    const [ activeModalNovo, setActiveModalNovo ] = useState(false);
+    const [ activeModalEdicao, setActiveModalEdicao ] = useState(false);
+    const [ exclusao, setExclusao ] = useState(false);
+    const [ idDeleteProduto, setIdDeleteProduto ] = useState(null);
+    const [ editProduto, setEditProduto ] = useState({idproduto: "", produto: "", idcategoria: "", categoria: "", preco: ""});
 
     useEffect(() => {
         async function getProdutos() {
@@ -33,8 +41,6 @@ export default function Produtos() {
         getProdutos()
     }, [atualizaTabela])
 
-    const [options, setOptions] = useState(['', 'Selecione']);
-
     useEffect(() => {
         async function getIngredientes() {
             try {
@@ -46,9 +52,9 @@ export default function Produtos() {
                 const ingredientesOption = data.map((ingrediente) => {
                     return [ingrediente.idingrediente, ingrediente.ingrediente]
                 })
-                const optionsWithDefault = [["", "Selecione"], ...ingredientesOption]
+                const optionsIngredientesWithDefault = [["", "Selecione"], ...ingredientesOption]
 
-                setOptions(optionsWithDefault)
+                setOptionsIngredientes(optionsIngredientesWithDefault)
             } catch(error) {
                 console.log(error)
             }
@@ -56,8 +62,6 @@ export default function Produtos() {
 
         getIngredientes()
     }, [])
-
-    const [ optionsCategoria, setOptionsCategoria ] = useState([0, 'Selecione']);
 
     useEffect(() => {
         async function getCategorias() {
@@ -82,35 +86,50 @@ export default function Produtos() {
         getCategorias()
 
     }, [])
-    
-    const [ activeModal, setActiveModal ] = useState(false);
-    const [ exclusao, setExclusao ] = useState(false);
-    const [ idDeleteProduto, setIdDeleteProduto ] = useState(null);
 
     const handleClickExclusao = (idProduto) => {
         setIdDeleteProduto(idProduto);
         setExclusao(!exclusao);
     }
 
+    const handleClickEdicao = (produtoEdit) => {
+        setActiveModalEdicao(true);
+        setEditProduto({
+            idproduto: produtoEdit.idproduto, 
+            produto: produtoEdit.produto, 
+            idcategoria: produtoEdit.idcategoria, 
+            categoria: produtoEdit.categoria, 
+            preco: produtoEdit.preco
+        });
+    }
+
     return (
         <div id='content'>
-        <Modal 
-            isOpen={activeModal} 
-            atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} 
-            options={options} 
-            optionsCategoria={optionsCategoria}
-            closeModal={() => setActiveModal(!activeModal)}
-        />
-        <ModalExclusao 
-            exclusao={exclusao}
-            atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} 
-            idProduto={idDeleteProduto}
-            closeExclusao={() => setExclusao(!exclusao)}
-        />
+            <Modal 
+                isOpen={activeModalNovo} 
+                atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} 
+                optionsIngredientes={optionsIngredientes} 
+                optionsCategoria={optionsCategoria}
+                closeModal={() => setActiveModalNovo(!activeModalNovo)}
+            />
+            <ModalExclusao 
+                exclusao={exclusao}
+                atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} 
+                idProduto={idDeleteProduto}
+                closeExclusao={() => setExclusao(!exclusao)}
+            />
+            <ModalEdicao 
+                isOpen={activeModalEdicao} 
+                atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} 
+                optionsIngredientes={optionsIngredientes} 
+                optionsCategoria={optionsCategoria}
+                closeModal={() => setActiveModalEdicao(!activeModalEdicao)}
+                editProduto={editProduto}
+            />
             <div id="contentProdutos">
                 <div className="content-itens" id="infoProdutos">
                     <h3>Produtos</h3>
-                    <button className="btn-novo" onClick={() => setActiveModal(true)}><BsPlusLg /> Novo</button>
+                    <button className="btn-novo" onClick={() => setActiveModalNovo(true)}><BsPlusLg /> Novo</button>
                     <button className="btn-filter"><span className="filter"><BsFunnelFill /></span></button>
                 </div>
                 <div className="content-itens" id="tabProdutos">
@@ -133,7 +152,7 @@ export default function Produtos() {
                                         <td>{produto.categoria}</td>
                                         <td>{produto.preco}</td>
                                         <td className="btn-actions">
-                                            <BsPencilSquare className="btn-edit"/>
+                                            <BsPencilSquare className="btn-edit" onClick={() => handleClickEdicao(produto)}/>
                                             <BsBackspace className="btn-delete" onClick={() => handleClickExclusao(produto.idproduto)}/>
                                         </td>
                                     </tr>

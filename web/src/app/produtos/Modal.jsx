@@ -14,7 +14,7 @@ Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   atualizaTabela: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(
+  optionsIngredientes: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.string)
   ).isRequired,
   optionsCategoria: PropTypes.arrayOf(
@@ -22,7 +22,7 @@ Modal.propTypes = {
   ).isRequired
 };
 
-export default function Modal({ isOpen, closeModal, options, atualizaTabela, optionsCategoria }) {
+export default function Modal({ isOpen, closeModal, optionsIngredientes, atualizaTabela, optionsCategoria }) {
     const [ingredientes, setIngredientes] = useState([{ id: uuidv4(), codigo: "", ingrediente: "Selecione"}]);
     const [index, setIndex] = useState(0);
 
@@ -34,7 +34,6 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela, opt
     const excluiIngrediente = (index) => {
         const novosIngredientes = [...ingredientes];
         novosIngredientes.splice(index, 1);
-        console.log(novosIngredientes)
         setIngredientes(novosIngredientes);
     };
     
@@ -44,7 +43,7 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela, opt
         novosIngredientes[index][name] = value;
 
         if(name === 'ingrediente') {
-            const ingredienteSelecionado = options.find(option => option[1] === value);
+            const ingredienteSelecionado = optionsIngredientes.find(option => option[1] === value);
 
             if(ingredienteSelecionado) {
                 novosIngredientes[index].codigo = ingredienteSelecionado[0];
@@ -116,8 +115,11 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela, opt
             setForm({produto: '', codCategoria: 0, categoria: 'Selecione', preco: ''});
             setIngredientes([{ codigo: '', ingrediente: 'Selecione' }]);
 
-            const select = document.getElementsByClassName('selectIngredientes')[0];
-            select.selectedIndex = 'Selecione'
+            const selectIngredientes = document.getElementsByClassName('selectIngredientes')[0];
+            selectIngredientes.selectedIndex = 'Selecione';
+            const selectCategorias = document.getElementsByClassName('selectCategorias')[0];
+
+            selectCategorias.selectedIndex = 'Selecione';
 
             toast.success('Produto cadastrado com sucesso!', {
                 autoClose: 3000,
@@ -197,7 +199,7 @@ export default function Modal({ isOpen, closeModal, options, atualizaTabela, opt
                                                     onChange={(event) => handleChange(index, event)}
                                                     value={ingrediente.ingrediente}
                                                 >
-                                                    {options.map(option => (
+                                                    {optionsIngredientes.map(option => (
                                                         <option key={option[0]} value={option[1]}>{option[1]}</option>
                                                     ))}
                                                 </select>

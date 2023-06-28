@@ -233,7 +233,8 @@
 
 #modal button.btn-salvar {
     margin: 0 0 5% 42.5%;
-    background-color: #730202;
+    background-color: rgb(0, 116, 52);
+    opacity: 1;
     color: white;
     height: 5vh;
     width: 15%;
@@ -252,5 +253,5 @@
 }
 
 #modal button.btn-salvar:hover {
-    background-color: #9b0303;
+    opacity: .9;
 }
