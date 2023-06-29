@@ -15,13 +15,17 @@ ModalEdicao.propTypes = {
     atualizaTabela: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     optionsIngredientes: PropTypes.arrayOf(
-        PropTypes.arrayOf(PropTypes.string)
+        PropTypes.arrayOf(
+            PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+        )
     ).isRequired,
     optionsCategoria: PropTypes.arrayOf(
-        PropTypes.arrayOf(PropTypes.string)
+        PropTypes.arrayOf(
+            PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+        )
     ).isRequired,
     editProduto: PropTypes.shape({
-        idproduto: PropTypes.number,
+        idproduto: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]),
         produto: PropTypes.string,
         idcategoria: PropTypes.number,
         categoria: PropTypes.string,

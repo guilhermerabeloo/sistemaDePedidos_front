@@ -14,15 +14,15 @@ import { BsBackspace } from "react-icons/bs";
 import { BsPencilSquare } from "react-icons/bs";
 
 export default function Produtos() {
-    const [ produtos, setProdutos ] = useState([{idproduto: "", produto: "", idcategoria: "", categoria: "", preco: ""}])
+    const [ produtos, setProdutos ] = useState([{idproduto: null, produto: "", idcategoria: 0, categoria: "", preco: ""}])
     const [ atualizaTabela, setAtualizaTabela ] = useState(false)
-    const [ optionsIngredientes, setOptionsIngredientes ] = useState(['', 'Selecione']);
-    const [ optionsCategoria, setOptionsCategoria ] = useState([0, 'Selecione']);
+    const [ optionsIngredientes, setOptionsIngredientes ] = useState([]);
+    const [ optionsCategoria, setOptionsCategoria ] = useState([]);
     const [ activeModalNovo, setActiveModalNovo ] = useState(false);
     const [ activeModalEdicao, setActiveModalEdicao ] = useState(false);
     const [ exclusao, setExclusao ] = useState(false);
-    const [ idDeleteProduto, setIdDeleteProduto ] = useState(null);
-    const [ editProduto, setEditProduto ] = useState({idproduto: "", produto: "", idcategoria: "", categoria: "", preco: ""});
+    const [ idDeleteProduto, setIdDeleteProduto ] = useState(0);
+    const [ editProduto, setEditProduto ] = useState({idproduto: null, produto: "", idcategoria: 0, categoria: "", preco: ""});
 
     useEffect(() => {
         async function getProdutos() {
@@ -30,7 +30,6 @@ export default function Produtos() {
                 const response = await api.get(
                     '/produtos'
                 )
-
                 const data = response.data.data;
                 setProdutos(data);
             } catch(error) {
@@ -84,7 +83,6 @@ export default function Produtos() {
         }
 
         getCategorias()
-
     }, [])
 
     const handleClickExclusao = (idProduto) => {

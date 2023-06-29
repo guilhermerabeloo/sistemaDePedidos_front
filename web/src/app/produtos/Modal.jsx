@@ -15,11 +15,15 @@ Modal.propTypes = {
   atualizaTabela: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   optionsIngredientes: PropTypes.arrayOf(
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    )
   ).isRequired,
   optionsCategoria: PropTypes.arrayOf(
-    PropTypes.arrayOf(PropTypes.string)
-  ).isRequired
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    )
+  ).isRequired,
 };
 
 export default function Modal({ isOpen, closeModal, optionsIngredientes, atualizaTabela, optionsCategoria }) {
