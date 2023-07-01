@@ -9,7 +9,7 @@
     transition: .5s;
     height: 100vh;
     grid-template-columns: 65px 46% 46%;
-    grid-template-rows: 16% 79% 5%;
+    grid-template-rows: 16% 81% 3%;
     grid-template-areas:
         'menu-lateral header header'
         'menu-lateral content content'

@@ -8,12 +8,14 @@ import { api } from '../../lib/api';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { BsPlusLg } from "react-icons/bs";
+import { BsChevronDoubleLeft, BsChevronDoubleRight, BsChevronLeft, BsChevronRight, BsPlusLg } from "react-icons/bs";
 import { BsFunnelFill } from "react-icons/bs";
 import { BsBackspace } from "react-icons/bs";
 import { BsPencilSquare } from "react-icons/bs";
 
 export default function Produtos() {
+    const [ paginaAtual, setPaginaAtual ] = useState(1);
+    const [ quantidadeDePaginas, setQuantidadeDePaginas ] = useState(1);
     const [ produtos, setProdutos ] = useState([{idproduto: null, produto: "", idcategoria: 0, categoria: "", preco: ""}])
     const [ atualizaTabela, setAtualizaTabela ] = useState(false)
     const [ optionsIngredientes, setOptionsIngredientes ] = useState([]);
@@ -31,14 +33,23 @@ export default function Produtos() {
                     '/produtos'
                 )
                 const data = response.data.data;
-                setProdutos(data);
+
+                const indiceInicio = (paginaAtual - 1) * 10;
+                const indiceFinal = indiceInicio + 10;
+                const produtosPaginaAtual = data.slice(indiceInicio, indiceFinal);
+
+                const contagemDePaginas = Math.ceil(data.length / 10);
+                console.log(contagemDePaginas)
+
+                setQuantidadeDePaginas(contagemDePaginas)
+                setProdutos(produtosPaginaAtual);
             } catch(error) {
                 console.log(error)
             }
         }
 
         getProdutos()
-    }, [atualizaTabela])
+    }, [atualizaTabela, paginaAtual])
 
     useEffect(() => {
         async function getIngredientes() {
@@ -88,7 +99,7 @@ export default function Produtos() {
     const handleClickExclusao = (idProduto) => {
         setIdDeleteProduto(idProduto);
         setExclusao(!exclusao);
-    }
+    };
 
     const handleClickEdicao = (produtoEdit) => {
         setActiveModalEdicao(true);
@@ -99,7 +110,29 @@ export default function Produtos() {
             categoria: produtoEdit.categoria, 
             preco: produtoEdit.preco
         });
-    }
+    };
+
+    const handleClickAvancaPagina = () => {
+        if(paginaAtual == quantidadeDePaginas) {
+            return
+        }
+
+        const atual = paginaAtual;
+        const proxima = atual + 1;
+
+        setPaginaAtual(proxima)
+    };
+
+    const handleClickVoltaPagina = () => {
+        if(paginaAtual == 1) {
+            return
+        }
+
+        const atual = paginaAtual;
+        const proxima = atual - 1;
+
+        setPaginaAtual(proxima)
+    };
 
     return (
         <div id='content'>
@@ -159,6 +192,31 @@ export default function Produtos() {
                         </tbody>
                     </table>
                 </div>
+                    <div className="content-itens" id="paginacao">
+                        <button
+                            onClick={() => setPaginaAtual(1)}
+                        >
+                            <BsChevronDoubleLeft />Primeira
+                        </button>
+                        <button 
+                            onClick={handleClickVoltaPagina}
+                        >
+                            <BsChevronLeft />Anterior
+                        </button>
+                        <p>
+                            {`${paginaAtual} de ${quantidadeDePaginas} páginas`}
+                            </p>
+                        <button 
+                            onClick={handleClickAvancaPagina}
+                        >
+                            Próxima<BsChevronRight />
+                        </button>
+                        <button
+                            onClick={() => setPaginaAtual(quantidadeDePaginas)}
+                        >
+                            Última<BsChevronDoubleRight />
+                        </button>
+                    </div>
             </div>
             <ToastContainer pauseOnHover={false}/>
         </div>

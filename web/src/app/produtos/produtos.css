@@ -1,10 +1,12 @@
 #contentProdutos {
     display: grid;
+    height: 99%;
     grid-template-columns: 33% 33% 34%;
-    grid-template-rows: 25% 75%;
+    grid-template-rows: 23% 69% 8%;
     grid-template-areas: 
         'infoProdutos infoProdutos infoProdutos'
-        'tabProdutos tabProdutos tabProdutos';
+        'tabProdutos tabProdutos tabProdutos'
+        'paginacao paginacao paginacao';
 }
 
 #infoProdutos {
@@ -76,7 +78,7 @@
 }
 
 #tabProdutos table tr{
-    height: 30px;
+    height: 1.72rem;
     font-size: 13px;
 }
 
@@ -127,3 +129,30 @@
 .btn-delete {
     color: #9b0303;
 }
+
+#paginacao {
+    grid-area: paginacao;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+#paginacao button {
+    color: #191970;
+    opacity: 1;
+    height: 2rem;
+    width: 5rem;
+    border-radius: 5px;
+    margin: 0 3px 0 3px;
+}
+
+#paginacao button:hover {
+    opacity: .8;
+} 
+
+#paginacao p {
+    margin: 0 2px 0 2px;
+    font-size: .8rem;
+}
+
