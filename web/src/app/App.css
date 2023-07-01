@@ -28,7 +28,7 @@
 #header {
     grid-area: header;
     display: grid;
-    grid-template-columns: 17% 50% 5% 20% 8%;
+    grid-template-columns: 20% 50% 5% 17% 8%;
     grid-template-areas:
         'logo pesquisa config user-name user-image';
 }
@@ -88,13 +88,24 @@ button:active {
 }
 
 #config {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
     grid-area: config;
     text-align: right;
 }
 
 #user-name {
     grid-area: user-name;
-    text-align: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#user-name p {
+    font-size: 1.2vw;
+    margin: 0;
 }
 
 .user-image {

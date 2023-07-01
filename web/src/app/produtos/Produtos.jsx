@@ -169,7 +169,7 @@ export default function Produtos() {
                             <tr>
                                 <th>Codigo</th>
                                 <th>Produto</th>
-                                <th>idCategoria</th>
+                                <th style={{display: "none"}}>idCategoria</th>
                                 <th>Categoria</th>
                                 <th>Valor</th>
                                 <th></th>
@@ -177,11 +177,11 @@ export default function Produtos() {
                             {produtos.map((produto) => {
                                 return (
                                     <tr key={produto.idproduto}>
-                                        <td>{produto.idproduto}</td>
-                                        <td>{produto.produto}</td>
-                                        <td>{produto.idcategoria}</td>
-                                        <td>{produto.categoria}</td>
-                                        <td>{produto.preco}</td>
+                                        <td style={{width: "15%"}}>{produto.idproduto}</td>
+                                        <td style={{width: "45%"}}>{produto.produto}</td>
+                                        <td style={{display: "none"}}>{produto.idcategoria}</td>
+                                        <td style={{width: "18%"}}>{produto.categoria}</td>
+                                        <td style={{width: "17%"}}>{produto.preco}</td>
                                         <td className="btn-actions">
                                             <BsPencilSquare className="btn-edit" onClick={() => handleClickEdicao(produto)}/>
                                             <BsBackspace className="btn-delete" onClick={() => handleClickExclusao(produto.idproduto)}/>
