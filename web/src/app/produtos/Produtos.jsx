@@ -2,13 +2,14 @@ import './Produtos.css';
 import Modal from './Modal';
 import ModalEdicao from './ModalEdicao';
 import { ModalExclusao } from '../../components/ModalExclusao';
+import { Paginacao } from '../../components/Paginacao';
 
 import { useState, useEffect } from 'react';
 import { api } from '../../lib/api';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { BsChevronDoubleLeft, BsChevronDoubleRight, BsChevronLeft, BsChevronRight, BsPlusLg } from "react-icons/bs";
+import { BsPlusLg } from "react-icons/bs";
 import { BsFunnelFill } from "react-icons/bs";
 import { BsBackspace } from "react-icons/bs";
 import { BsPencilSquare } from "react-icons/bs";
@@ -39,7 +40,7 @@ export default function Produtos() {
                 const produtosPaginaAtual = data.slice(indiceInicio, indiceFinal);
 
                 const contagemDePaginas = Math.ceil(data.length / 10);
-                console.log(contagemDePaginas)
+
 
                 setQuantidadeDePaginas(contagemDePaginas)
                 setProdutos(produtosPaginaAtual);
@@ -112,28 +113,6 @@ export default function Produtos() {
         });
     };
 
-    const handleClickAvancaPagina = () => {
-        if(paginaAtual == quantidadeDePaginas) {
-            return
-        }
-
-        const atual = paginaAtual;
-        const proxima = atual + 1;
-
-        setPaginaAtual(proxima)
-    };
-
-    const handleClickVoltaPagina = () => {
-        if(paginaAtual == 1) {
-            return
-        }
-
-        const atual = paginaAtual;
-        const proxima = atual - 1;
-
-        setPaginaAtual(proxima)
-    };
-
     return (
         <div id='content'>
             <Modal 
@@ -180,8 +159,8 @@ export default function Produtos() {
                                         <td style={{width: "15%"}}>{produto.idproduto}</td>
                                         <td style={{width: "45%"}}>{produto.produto}</td>
                                         <td style={{display: "none"}}>{produto.idcategoria}</td>
-                                        <td style={{width: "18%"}}>{produto.categoria}</td>
-                                        <td style={{width: "17%"}}>{produto.preco}</td>
+                                        <td style={{width: "17%"}}>{produto.categoria}</td>
+                                        <td style={{width: "16%"}}>{produto.preco}</td>
                                         <td className="btn-actions">
                                             <BsPencilSquare className="btn-edit" onClick={() => handleClickEdicao(produto)}/>
                                             <BsBackspace className="btn-delete" onClick={() => handleClickExclusao(produto.idproduto)}/>
@@ -192,31 +171,12 @@ export default function Produtos() {
                         </tbody>
                     </table>
                 </div>
-                    <div className="content-itens" id="paginacao">
-                        <button
-                            onClick={() => setPaginaAtual(1)}
-                        >
-                            <BsChevronDoubleLeft />Primeira
-                        </button>
-                        <button 
-                            onClick={handleClickVoltaPagina}
-                        >
-                            <BsChevronLeft />Anterior
-                        </button>
-                        <p>
-                            {`${paginaAtual} de ${quantidadeDePaginas} páginas`}
-                            </p>
-                        <button 
-                            onClick={handleClickAvancaPagina}
-                        >
-                            Próxima<BsChevronRight />
-                        </button>
-                        <button
-                            onClick={() => setPaginaAtual(quantidadeDePaginas)}
-                        >
-                            Última<BsChevronDoubleRight />
-                        </button>
-                    </div>
+                <Paginacao 
+                    paginaAtual={paginaAtual}    
+                    setPaginaAtual={setPaginaAtual}
+                    quantidadeDePaginas={quantidadeDePaginas}
+                    setQuantidadeDePaginas={setQuantidadeDePaginas}
+                />
             </div>
             <ToastContainer pauseOnHover={false}/>
         </div>
