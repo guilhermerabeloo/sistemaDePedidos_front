@@ -1,24 +1,24 @@
-#contentProdutos {
+#contentClientes {
     display: grid;
     height: 99%;
     grid-template-columns: 33% 33% 34%;
     grid-template-rows: 23% 69% 8%;
     grid-template-areas: 
-        'infoProdutos infoProdutos infoProdutos'
-        'tabProdutos tabProdutos tabProdutos'
+        'infoClientes infoClientes infoClientes'
+        'tabClientes tabClientes tabClientes'
         'paginacao paginacao paginacao';
 }
 
-#infoProdutos {
-    grid-area: infoProdutos;
+#infoClientes {
+    grid-area: infoClientes;
 }
 
-#infoProdutos h3 {
+#infoClientes h3 {
     margin: 0 0 5vh 5.5%;
     color: rgb(73, 73, 73);
 }
 
-#infoProdutos button.btn-novo {
+#infoClientes button.btn-novo {
     background-color: rgb(0, 116, 52);
     opacity: 1;
     color: white;
@@ -30,15 +30,11 @@
     margin-left: 5.5%;
 }
 
-#infoProdutos button.btn-novo i {
-    margin-right: 0.7vw;
-}
-
-#infoProdutos button.btn-novo:hover {
+#infoClientes button.btn-novo:hover {
     opacity: .9;
 }
 
-#infoProdutos button.btn-filter {
+#infoClientes button.btn-filter {
     margin-left: 1vw;
     border-radius: 50%;
     height: 5vh;
@@ -49,13 +45,13 @@
     color: rgb(73, 73, 73);
 }
 
-#infoProdutos button.btn-filter:hover {
+#infoClientes button.btn-filter:hover {
     color: rgb(31, 31, 31);
 }
 
 /* Configurações da tabela */
-#tabProdutos {
-    grid-area: tabProdutos;
+#tabClientes {
+    grid-area: tabClientes;
     align-self: start;
     height: 54vh;
     width: 90%;
@@ -64,25 +60,25 @@
     margin: 0 auto;
 }
 
-#tabProdutos table th:first-child {
+#tabClientes table th:first-child {
     border-top-left-radius: 10px;
 }
 
-#tabProdutos table th:last-child {
+#tabClientes table th:last-child {
     border-top-right-radius: 10px;
 }
 
-#tabProdutos table th{
+#tabClientes table th{
     background-color: #9b0303;
     color: white;
 }
 
-#tabProdutos table tr{
+#tabClientes table tr{
     height: 1.72rem;
-    font-size: 13px;
+    font-size: 1.1vw;
 }
 
-#tabProdutos table {
+#tabClientes table {
     height: auto;
     width: 99%;
     margin: 0 auto;
@@ -91,12 +87,12 @@
     background-color: rgb(240, 240, 240);
 }
 
-#tabProdutos::-webkit-scrollbar {
+#tabClientes::-webkit-scrollbar {
     width: 15px;
     background-color: #f5f5f5;
 }
 
-#tabProdutos::-webkit-scrollbar-thumb {
+#tabClientes::-webkit-scrollbar-thumb {
     background-color: #aaa;
     border-radius: 10px;
 }
@@ -129,6 +125,4 @@
 .btn-delete {
     color: #9b0303;
 }
-
-
 

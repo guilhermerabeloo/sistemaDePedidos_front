@@ -1,12 +1,13 @@
-import { BsChevronDoubleLeft, BsChevronDoubleRight, BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import PropTypes from 'prop-types';
+import '../components/css/Paginacao.css';
+
+import { BsChevronDoubleLeft, BsChevronDoubleRight, BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 Paginacao.propTypes = {
     paginaAtual: PropTypes.number.isRequired,
     setPaginaAtual: PropTypes.func.isRequired,
     quantidadeDePaginas: PropTypes.number.isRequired,
 }
-
 
 export function Paginacao ({ paginaAtual, quantidadeDePaginas, setPaginaAtual}) {
     const handleClickAvancaPagina = () => {

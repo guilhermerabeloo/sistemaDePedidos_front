@@ -43,7 +43,7 @@ export function MenuLateral({ propToggleExpandirGrid, menuExpandido }) {
                         </a>
                         <ul className={`itens-submenu ${activeSubMenu === 'cadastro' ? 'exibirItens' : ''}`}>
                             <li><Link to="/produtos">Produtos</Link></li>
-                            <li><a href="#">Clientes</a></li>
+                            <li><Link to="/clientes">Clientes</Link></li>
                             <li><a href="#">Ingredientes</a></li>
                             <li><a href="#">Bairros</a></li>
                         </ul>

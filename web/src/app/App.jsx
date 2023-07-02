@@ -6,7 +6,7 @@ import { MenuLateral } from '../components/menuLateral';
 import { Outlet } from 'react-router-dom';
 
 function App() {
-  const [expandirGrid, setExpandirGrid] = useState(false);
+  const [ expandirGrid, setExpandirGrid ] = useState(false);
   const menuExpandido = expandirGrid ? true : false;
 
   const toggleExpandirGrid = () => {

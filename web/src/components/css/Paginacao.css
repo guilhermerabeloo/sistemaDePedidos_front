@@ -1,0 +1,25 @@
+#paginacao {
+    grid-area: paginacao;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+#paginacao button {
+    color: #191970;
+    opacity: 1;
+    height: 2rem;
+    width: 5rem;
+    border-radius: 5px;
+    margin: 0 3px 0 3px;
+}
+
+#paginacao button:hover {
+    opacity: .8;
+} 
+
+#paginacao p {
+    margin: 0 2px 0 2px;
+    font-size: .8rem;
+}

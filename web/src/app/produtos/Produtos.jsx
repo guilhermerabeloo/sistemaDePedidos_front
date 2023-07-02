@@ -146,7 +146,7 @@ export default function Produtos() {
                     <table>
                         <tbody>
                             <tr>
-                                <th>Codigo</th>
+                                <th>Código</th>
                                 <th>Produto</th>
                                 <th style={{display: "none"}}>idCategoria</th>
                                 <th>Categoria</th>
