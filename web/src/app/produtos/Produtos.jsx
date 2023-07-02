@@ -3,16 +3,14 @@ import Modal from './Modal';
 import ModalEdicao from './ModalEdicao';
 import { ModalExclusao } from '../../components/ModalExclusao';
 import { Paginacao } from '../../components/Paginacao';
+import { api } from '../../lib/api';
 
 import { useState, useEffect } from 'react';
-import { api } from '../../lib/api';
+import { Helmet } from 'react-helmet';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { BsPlusLg } from "react-icons/bs";
-import { BsFunnelFill } from "react-icons/bs";
-import { BsBackspace } from "react-icons/bs";
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPlusLg, BsFunnelFill, BsBackspace, BsPencilSquare } from "react-icons/bs";
 
 export default function Produtos() {
     const [ paginaAtual, setPaginaAtual ] = useState(1);
@@ -40,7 +38,6 @@ export default function Produtos() {
                 const produtosPaginaAtual = data.slice(indiceInicio, indiceFinal);
 
                 const contagemDePaginas = Math.ceil(data.length / 10);
-
 
                 setQuantidadeDePaginas(contagemDePaginas)
                 setProdutos(produtosPaginaAtual);
@@ -115,6 +112,11 @@ export default function Produtos() {
 
     return (
         <div id='content'>
+            <div>
+                <Helmet>
+                    <title>Produtos</title>
+                </Helmet>
+            </div>
             <Modal 
                 isOpen={activeModalNovo} 
                 atualizaTabela={() => setAtualizaTabela(!atualizaTabela)} 
