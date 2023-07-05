@@ -1,4 +1,5 @@
 import './Clientes.css'
+import ModalClientes from './ModalClientes.jsx';
 import { Paginacao } from '../../components/Paginacao';
 import { api } from '../../lib/api';
 import { useEffect, useState } from 'react';
@@ -56,6 +57,7 @@ export default function Clientes() {
                     <title>Clientes</title>
                 </Helmet>
             </div>
+            <ModalClientes />
             <div id="contentClientes">
                 <div className="content-itens" id="infoClientes">
                     <h3>Clientes</h3>

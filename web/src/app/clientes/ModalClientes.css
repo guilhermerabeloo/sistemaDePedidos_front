@@ -1,0 +1,151 @@
+
+#fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+#modalCliente {
+    position: fixed;
+    max-height: 90%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    background-color: white;
+    z-index: 2;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#fade,
+#modalCliente {
+    transition: 0.5s;
+    opacity: 1;
+    pointer-events: all;
+}
+
+#fade.hide,
+#modalCliente.hide {
+    transition: 0.5s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#modalCliente.hide {
+    top: 0;
+}
+
+#modalCliente button.btn-fecharModal {
+    position: absolute;
+    top: 4%;
+    right: 3.5%;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: rgb(73, 73, 73);
+}
+
+.colunasForm {
+    display: flex;  
+    flex-direction: row;
+    margin-bottom: 2vh;
+}
+
+.coluna1 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.coluna2 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.pontoReferencia {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2vh;
+}
+
+.sexo {
+    margin: 0 0 2vh 10%;
+}
+
+.sexoOptions {
+    display: flex;
+    flex-direction: row;
+}
+
+.optionFeminino, .optionMasculino {
+    display: flex;
+    flex-direction: row;
+    margin: 2vh 2vh 0 0;
+}
+
+
+#modalCliente form {
+    color: rgb(51, 51, 51);
+    margin-bottom: 2%;
+    margin-top: 6%;
+}
+
+#modalCliente form input,
+#modalCliente form select {
+    margin-bottom: 7px;
+    outline: unset;
+    padding: 7px;
+    border: 1px solid rgb(51, 51, 51);
+    border-radius: 10px;
+}
+
+#modalCliente form input {
+    width: 80%;
+}
+
+#modalCliente form select {
+    width: 84%;
+}
+
+#modalCliente form input[type=number]::-webkit-inner-spin-button, 
+#modalCliente form input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+#modalCliente form input:focus {
+    background-color: blanchedalmond;
+    font-weight: bold;
+}
+
+
+#modalCliente button.btn-salvar {
+    margin: 0 0 5% 42.5%;
+    background-color: rgb(0, 116, 52);
+    opacity: 1;
+    color: white;
+    height: 5vh;
+    width: 15%;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+#modalCliente button.btn-salvar i {
+    margin-right: 0.7vw;
+}
+
+#modalCliente button.btn-salvar:active {
+    transform: scale(0.95);
+    transition: transform 0.2s ease-in-out;
+}
+
+#modalCliente button.btn-salvar:hover {
+    opacity: .9;
+}

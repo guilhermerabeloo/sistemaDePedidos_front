@@ -1,4 +1,4 @@
-/* Configurações do fade */
+// Configurações do fade 
 #fade {
     position: fixed;
     top: 0;
@@ -9,7 +9,7 @@
     z-index: 1;
 }
 
-/* Configurações do modal */
+// Configurações do modal 
 #modal {
     position: fixed;
     max-height: 90%;
