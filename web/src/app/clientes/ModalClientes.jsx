@@ -1,12 +1,19 @@
 import './ModalClientes.css'
+import PropTypes from 'prop-types';
+
 import { BsXSquareFill, BsPlusSquare } from "react-icons/bs";
 
-export default function ModalClientes() {
+ModalClientes.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    closeModal: PropTypes.func.isRequired,
+}
+
+export default function ModalClientes({ isOpen, closeModal }) {
     return (
         <div>
-            <div id="fade" className={''}></div>
-            <div id="modalCliente" className={''}>
-                <button className="btn-fecharModal"><BsXSquareFill /></button>
+            <div id="fade" className={isOpen ? '' : 'hide'} onClick={closeModal}></div>
+            <div id="modalCliente" className={isOpen ? '' : 'hide'}>
+                <button className="btn-fecharModal" onClick={closeModal}><BsXSquareFill /></button>
                 <form action="submit">
                     <div className="colunasForm">
                         <div className="coluna1">

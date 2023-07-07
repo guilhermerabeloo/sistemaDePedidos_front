@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import { BsPlusLg, BsPencilSquare, BsFunnelFill, BsBackspace } from "react-icons/bs";
 
 export default function Clientes() {
+    const [ activeModalNovo, setActiveModalNovo ] = useState(false);
     const [ paginaAtual, setPaginaAtual ] = useState(1);
     const [ quantidadeDePaginas, setQuantidadeDePaginas ] = useState(1);
     const [ clientes, setClientes ] = useState([{
@@ -57,11 +58,14 @@ export default function Clientes() {
                     <title>Clientes</title>
                 </Helmet>
             </div>
-            <ModalClientes />
+            <ModalClientes 
+                isOpen={activeModalNovo}
+                closeModal={() => setActiveModalNovo(!activeModalNovo)}
+            />
             <div id="contentClientes">
                 <div className="content-itens" id="infoClientes">
                     <h3>Clientes</h3>
-                    <button className="btn-novo"><BsPlusLg /> Novo</button>
+                    <button className="btn-novo" onClick={() => setActiveModalNovo(true)}><BsPlusLg /> Novo</button>
                     <button className="btn-filter"><span className="filter"><BsFunnelFill /></span></button>
                 </div>
                 <div className="content-itens" id="tabClientes">
