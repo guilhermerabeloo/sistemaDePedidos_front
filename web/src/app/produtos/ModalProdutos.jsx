@@ -1,4 +1,4 @@
-import './Modal.css'
+import './ModalProdutos.css'
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { api } from '../../lib/api';
@@ -10,7 +10,7 @@ import { BsXSquareFill } from "react-icons/bs";
 import { BsPlusLg } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
 
-Modal.propTypes = {
+ModalProdutos.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   atualizaTabela: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
@@ -26,7 +26,7 @@ Modal.propTypes = {
   ).isRequired,
 };
 
-export default function Modal({ isOpen, closeModal, optionsIngredientes, atualizaTabela, optionsCategoria }) {
+export default function ModalProdutos({ isOpen, closeModal, optionsIngredientes, atualizaTabela, optionsCategoria }) {
     const [ingredientes, setIngredientes] = useState([{ id: uuidv4(), codigo: "", ingrediente: "Selecione"}]);
     const [index, setIndex] = useState(0);
 

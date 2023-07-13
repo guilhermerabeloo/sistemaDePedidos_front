@@ -1,4 +1,4 @@
-import './Modal.css'
+import './ModalProdutos.css'
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { api } from '../../lib/api';
