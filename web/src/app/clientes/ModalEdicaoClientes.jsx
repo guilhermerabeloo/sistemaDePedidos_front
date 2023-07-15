@@ -42,8 +42,6 @@ export default function ModalEdicaoClientes({ isOpen, atualizaTabela, closeModal
         sexo: '',
     });
 
-    console.log(editCliente)
-
     useEffect(() => {
         async function getBairros() {
             try {

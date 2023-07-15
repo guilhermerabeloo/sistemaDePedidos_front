@@ -25,7 +25,7 @@
 }
 
 .modal-exclusao-fade,
-. {
+.modal-exclusao {
     transition: 0.5s;
     opacity: 1;
     pointer-events: all;

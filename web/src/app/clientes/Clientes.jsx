@@ -1,6 +1,7 @@
 import './Clientes.css'
 import ModalClientes from './ModalClientes.jsx';
 import ModalEdicaoClientes from './ModalEdicaoClientes';
+import ModalExclusaoCliente from './ModalExclusaoCliente';
 import { Paginacao } from '../../components/Paginacao';
 import { api } from '../../lib/api';
 import { useEffect, useState } from 'react';
@@ -13,6 +14,8 @@ export default function Clientes() {
     const [ atualizaTabela, setAtualizaTabela ] = useState(false);
     const [ activeModalNovo, setActiveModalNovo ] = useState(false);
     const [ activeModalEdicao, setActiveModalEdicao ] = useState(false);
+    const [ activeModalExclusao, setActiveModalExclusao ] = useState(false);
+    const [ idDeleteCliente, setIdDeleteCliente ] = useState(0);
     const [ paginaAtual, setPaginaAtual ] = useState(1);
     const [ quantidadeDePaginas, setQuantidadeDePaginas ] = useState(1);
     const [ clientes, setClientes ] = useState([{
@@ -85,7 +88,12 @@ export default function Clientes() {
             dtcadastro: clienteEdit.datacadastro
         })
         setActiveModalEdicao(true)
-    }
+    };
+
+    const handleClickExclusao = (id) => {
+        setIdDeleteCliente(id);
+        setActiveModalExclusao(true);
+    };
 
     return (
         <div id="content">
@@ -104,6 +112,12 @@ export default function Clientes() {
                 atualizaTabela={() => setAtualizaTabela(!atualizaTabela)}
                 closeModal={() => setActiveModalEdicao(!activeModalEdicao)}
                 editCliente={editCliente}            
+            />
+            <ModalExclusaoCliente
+                isOpen={activeModalExclusao}
+                atualizaTabela={() => setAtualizaTabela(!atualizaTabela)}
+                idDeleteCliente={idDeleteCliente}
+                closeModal={() => setActiveModalExclusao(!activeModalExclusao)}
             />
             <div id="contentClientes">
                 <div className="content-itens" id="infoClientes">
@@ -147,12 +161,11 @@ export default function Clientes() {
                                         <td className="btn-actions">
                                             <BsPencilSquare
                                                 className="btn-edit"
-                                                onClick={() => {
-                                                    handleClickEdicao(cliente)
-                                                }}
+                                                onClick={() => handleClickEdicao(cliente)}
                                             />
                                             <BsBackspace
                                                 className="btn-delete"
+                                                onClick={() => handleClickExclusao(cliente.idcliente)}
                                             />
                                         </td>
                                     </tr>
