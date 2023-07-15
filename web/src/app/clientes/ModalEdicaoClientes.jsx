@@ -1,6 +1,7 @@
 import './ModalClientes.css'
 import PropTypes from 'prop-types';
 import { api } from '../../lib/api';
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 
 import { BsPlusSquare, BsXSquareFill } from "react-icons/bs";
@@ -28,6 +29,7 @@ ModalEdicaoClientes.propTypes = {
 export default function ModalEdicaoClientes({ isOpen, atualizaTabela, closeModal, editCliente }) {
     const [ bairros, setBairros ] = useState([]);
     const [ form, setForm ] = useState({
+        idCliente: 0,
         cliente: '',
         telefone: '',
         dataDeNascimento: '',
@@ -39,6 +41,8 @@ export default function ModalEdicaoClientes({ isOpen, atualizaTabela, closeModal
         pontoDeReferencia: '',
         sexo: '',
     });
+
+    console.log(editCliente)
 
     useEffect(() => {
         async function getBairros() {
@@ -67,13 +71,14 @@ export default function ModalEdicaoClientes({ isOpen, atualizaTabela, closeModal
 
     useEffect(() => {
         setForm({
+            idCliente: editCliente.idcliente,
             cliente: editCliente.cliente,
             telefone: editCliente.telefone,
             dataDeNascimento: editCliente.dtnascimento,
             endereco: editCliente.endereco,
             numero: editCliente.numero,
             complemento: editCliente.complemento,
-            idBairro: editCliente.idBairro,
+            idBairro: editCliente.idbairro,
             bairro: editCliente.bairro,
             pontoDeReferencia: editCliente.pontoDeReferencia,
             sexo: editCliente.sexo,
@@ -108,13 +113,46 @@ export default function ModalEdicaoClientes({ isOpen, atualizaTabela, closeModal
 
         setForm(formAtualizado);
     };
+    
+    const putCliente = async (event) => {
+        event.preventDefault();
+
+        try {
+            await api.put(
+                `/alteraCliente/${form.idCliente}`,
+                {
+                    Cliente: form.cliente,
+                    Telefone: form.telefone,
+                    DtNascimento: form.dataDeNascimento,
+                    Endereco: form.endereco,
+                    Numero: form.numero,
+                    IdBairro: form.idBairro,
+                    Complemento: form.complemento,
+                    PontoDeReferencia: form.pontoDeReferencia,
+                    Sexo: form.sexo,
+                }
+            );
+
+            closeModal(true);
+            atualizaTabela(true);
+
+            toast.success('Cliente editado com sucesso!', {
+                autoClose: 3000,
+            });
+        } catch (error) {
+            console.log(error);
+            toast.error('Erro ao editar o cadastro do cliente.', {
+                autoClose: 3000,
+            });
+        }
+    }
 
     return (
         <div>
             <div id="fade" className={isOpen ? '' : 'hide'} onClick={closeModal}></div>
             <div id="modalCliente" className={isOpen ? '' : 'hide'}>
                 <button className="btn-fecharModal" onClick={closeModal}><BsXSquareFill /></button>
-                <form>
+                <form onSubmit={putCliente}>
                     <div className="nomeCliente">
                             <label htmlFor="cliente">Cliente</label>
                             <input 

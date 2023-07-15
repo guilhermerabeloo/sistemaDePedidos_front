@@ -52,7 +52,6 @@ export default function Clientes() {
                     `/clientes`
                 )
                 const data = response.data.data
-                console.log(data)
         
                 const indiceInicio = (paginaAtual - 1) * 10;
                 const indiceFinal = indiceInicio + 10;
@@ -150,7 +149,6 @@ export default function Clientes() {
                                                 className="btn-edit"
                                                 onClick={() => {
                                                     handleClickEdicao(cliente)
-                                                    console.log(cliente)
                                                 }}
                                             />
                                             <BsBackspace
