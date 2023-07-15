@@ -122,7 +122,6 @@ export default function ModalProdutos({ isOpen, closeModal, optionsIngredientes,
             const selectIngredientes = document.getElementsByClassName('selectIngredientes')[0];
             selectIngredientes.selectedIndex = 'Selecione';
             const selectCategorias = document.getElementsByClassName('selectCategorias')[0];
-
             selectCategorias.selectedIndex = 'Selecione';
 
             toast.success('Produto cadastrado com sucesso!', {

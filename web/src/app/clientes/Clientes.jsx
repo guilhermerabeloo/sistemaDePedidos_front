@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import { BsPlusLg, BsPencilSquare, BsFunnelFill, BsBackspace } from "react-icons/bs";
 
 export default function Clientes() {
+    const [ atualizaTabela, setAtualizaTabela ] = useState(false);
     const [ activeModalNovo, setActiveModalNovo ] = useState(false);
     const [ paginaAtual, setPaginaAtual ] = useState(1);
     const [ quantidadeDePaginas, setQuantidadeDePaginas ] = useState(1);
@@ -49,7 +50,7 @@ export default function Clientes() {
         }
     
         getClientes()
-    }, [])
+    }, [atualizaTabela])
 
     return (
         <div id="content">
@@ -60,6 +61,7 @@ export default function Clientes() {
             </div>
             <ModalClientes 
                 isOpen={activeModalNovo}
+                atualizaTabela={() => setAtualizaTabela(!atualizaTabela)}
                 closeModal={() => setActiveModalNovo(!activeModalNovo)}
             />
             <div id="contentClientes">
@@ -75,13 +77,13 @@ export default function Clientes() {
                                 <th style={{width:  "6%"}}>Código</th>
                                 <th style={{width: "23%"}}>Nome</th>
                                 <th style={{width: "12%"}}>Telefone</th>
-                                <th style={{width: "16%"}}>Endereco</th>
-                                <th style={{width:  "8%"}}>Numero</th>
+                                <th style={{width: "16%"}}>Endereço</th>
+                                <th style={{width:  "8%"}}>Número</th>
                                 <th style={{width: "15%"}}>Bairro</th>
                                 <th style={{width: "10%"}}>Nascimento</th>
                                 <th style={{display: "none"}}>Complemento</th>
                                 <th style={{display: "none"}}>idBairro</th>
-                                <th style={{display: "none"}}>Ponto De Referencia</th>
+                                <th style={{display: "none"}}>Ponto De Referência</th>
                                 <th style={{display: "none"}}>Sexo</th>
                                 <th style={{display: "none"}}>Cadastro</th>
                                 <th style={{width: "7%"}}></th>

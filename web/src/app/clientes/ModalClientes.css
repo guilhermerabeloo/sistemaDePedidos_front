@@ -68,7 +68,7 @@
     width: 50%;
 }
 
-.pontoReferencia {
+.pontoReferencia, .nomeCliente {
     display: flex;
     flex-direction: column;
     margin-bottom: 2vh;
