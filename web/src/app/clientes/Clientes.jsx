@@ -1,5 +1,6 @@
 import './Clientes.css'
 import ModalClientes from './ModalClientes.jsx';
+import ModalEdicaoClientes from './ModalEdicaoClientes';
 import { Paginacao } from '../../components/Paginacao';
 import { api } from '../../lib/api';
 import { useEffect, useState } from 'react';
@@ -11,6 +12,7 @@ import { BsPlusLg, BsPencilSquare, BsFunnelFill, BsBackspace } from "react-icons
 export default function Clientes() {
     const [ atualizaTabela, setAtualizaTabela ] = useState(false);
     const [ activeModalNovo, setActiveModalNovo ] = useState(false);
+    const [ activeModalEdicao, setActiveModalEdicao ] = useState(false);
     const [ paginaAtual, setPaginaAtual ] = useState(1);
     const [ quantidadeDePaginas, setQuantidadeDePaginas ] = useState(1);
     const [ clientes, setClientes ] = useState([{
@@ -28,6 +30,21 @@ export default function Clientes() {
         dtcadastro: ''
     }]);
 
+    const [ editCliente, setEditCliente ] = useState({
+        idcliente: 0,
+        cliente: '',
+        telefone: '',
+        endereco: '',
+        numero: 0,
+        complemento: '',
+        idbairro: 0,
+        bairro: '',
+        pontoDeReferencia: '',
+        sexo: '',
+        dtnascimento: '',
+        dtcadastro: ''
+    });
+
     useEffect(() => {
         async function getClientes() {
             try {
@@ -35,6 +52,7 @@ export default function Clientes() {
                     `/clientes`
                 )
                 const data = response.data.data
+                console.log(data)
         
                 const indiceInicio = (paginaAtual - 1) * 10;
                 const indiceFinal = indiceInicio + 10;
@@ -52,6 +70,24 @@ export default function Clientes() {
         getClientes()
     }, [atualizaTabela])
 
+    const handleClickEdicao = (clienteEdit) => {
+        setEditCliente({
+            idcliente: clienteEdit.idcliente,
+            cliente: clienteEdit.cliente,
+            telefone: clienteEdit.telefone,
+            endereco: clienteEdit.endereco,
+            numero: clienteEdit.numero,
+            complemento: clienteEdit.complemento,
+            idbairro: clienteEdit.idbairro,
+            bairro: clienteEdit.bairro,
+            pontoDeReferencia: clienteEdit.pontodereferencia,
+            sexo: clienteEdit.sexo,
+            dtnascimento: clienteEdit.dtnascimento,
+            dtcadastro: clienteEdit.datacadastro
+        })
+        setActiveModalEdicao(true)
+    }
+
     return (
         <div id="content">
             <div>
@@ -63,6 +99,12 @@ export default function Clientes() {
                 isOpen={activeModalNovo}
                 atualizaTabela={() => setAtualizaTabela(!atualizaTabela)}
                 closeModal={() => setActiveModalNovo(!activeModalNovo)}
+            />
+            <ModalEdicaoClientes 
+                isOpen={activeModalEdicao}
+                atualizaTabela={() => setAtualizaTabela(!atualizaTabela)}
+                closeModal={() => setActiveModalEdicao(!activeModalEdicao)}
+                editCliente={editCliente}            
             />
             <div id="contentClientes">
                 <div className="content-itens" id="infoClientes">
@@ -104,8 +146,16 @@ export default function Clientes() {
                                         <td style={{display: "none"}}>{cliente.sexo === 'F' ? 'Feminino' : 'Masculino'}</td>
                                         <td style={{display: "none"}}>{cliente.dtcadastro}</td>
                                         <td className="btn-actions">
-                                            <BsPencilSquare className="btn-edit"/>
-                                            <BsBackspace className="btn-delete"/>
+                                            <BsPencilSquare
+                                                className="btn-edit"
+                                                onClick={() => {
+                                                    handleClickEdicao(cliente)
+                                                    console.log(cliente)
+                                                }}
+                                            />
+                                            <BsBackspace
+                                                className="btn-delete"
+                                            />
                                         </td>
                                     </tr>
                                 )
