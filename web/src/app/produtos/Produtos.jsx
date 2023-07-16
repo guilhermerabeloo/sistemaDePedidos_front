@@ -6,7 +6,6 @@ import { Paginacao } from "../../components/Paginacao";
 import { api } from "../../lib/api";
 
 import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,25 +17,29 @@ import {
 } from "react-icons/bs";
 
 export default function Produtos() {
-  const [ paginaAtual, setPaginaAtual ] = useState(1);
-  const [ quantidadeDePaginas, setQuantidadeDePaginas ] = useState(1);
-  const [ produtos, setProdutos ] = useState([
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const [quantidadeDePaginas, setQuantidadeDePaginas] = useState(1);
+  const [produtos, setProdutos] = useState([
     { idproduto: null, produto: "", idcategoria: 0, categoria: "", preco: "" },
   ]);
-  const [ atualizaTabela, setAtualizaTabela ] = useState(false);
-  const [ optionsIngredientes, setOptionsIngredientes ] = useState([]);
-  const [ optionsCategoria, setOptionsCategoria ] = useState([]);
-  const [ activeModalNovo, setActiveModalNovo ] = useState(false);
-  const [ activeModalEdicao, setActiveModalEdicao ] = useState(false);
-  const [ exclusao, setExclusao ] = useState(false);
-  const [ idDeleteProduto, setIdDeleteProduto ] = useState(0);
-  const [ editProduto, setEditProduto ] = useState({
+  const [atualizaTabela, setAtualizaTabela] = useState(false);
+  const [optionsIngredientes, setOptionsIngredientes] = useState([]);
+  const [optionsCategoria, setOptionsCategoria] = useState([]);
+  const [activeModalNovo, setActiveModalNovo] = useState(false);
+  const [activeModalEdicao, setActiveModalEdicao] = useState(false);
+  const [exclusao, setExclusao] = useState(false);
+  const [idDeleteProduto, setIdDeleteProduto] = useState(0);
+  const [editProduto, setEditProduto] = useState({
     idproduto: null,
     produto: "",
     idcategoria: 0,
     categoria: "",
     preco: "",
   });
+
+  useEffect(() => {
+    document.title = 'Produtos';
+  }, []);
 
   useEffect(() => {
     async function getProdutos() {
@@ -122,11 +125,6 @@ export default function Produtos() {
 
   return (
     <div id="content">
-      <div>
-        <Helmet>
-          <title>Produtos</title>
-        </Helmet>
-      </div>
       <ModalProdutos
         isOpen={activeModalNovo}
         atualizaTabela={() => setAtualizaTabela(!atualizaTabela)}

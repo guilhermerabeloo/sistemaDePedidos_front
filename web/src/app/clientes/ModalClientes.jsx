@@ -70,7 +70,7 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                 formAtualizado.idBairro = bairro[0]
 
                 setForm(formAtualizado)
-            };
+            }
         });
     };
 
@@ -139,6 +139,7 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                                 type="text"
                                 name="cliente"
                                 placeholder="Ex: Francisco Silva..."
+                                value={form.cliente}
                                 onChange={onChangeCliente}
                             />
                     </div>
@@ -148,6 +149,7 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                             <input 
                                 type="text"
                                 name="telefone"
+                                value={form.telefone}
                                 onChange={onChangeCliente}
                             />
                             <label htmlFor="endereco">Endereco</label>
@@ -155,12 +157,14 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                                 type="text"
                                 name="endereco"
                                 placeholder="Ex: Francisco Silva..."
+                                value={form.endereco}
                                 onChange={onChangeCliente}
                             />
                             <label htmlFor="bairro">Bairro</label>
                             <select
                                 name="bairro"
                                 className='selectBairro'
+                                value={form.bairro}
                                 onChange={onChangeBairro}
                             >
                                 {bairros.map((bairro) => (
@@ -173,12 +177,14 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                             <input 
                                 type="date"
                                 name="dataDeNascimento"
+                                value={form.dataDeNascimento}
                                 onChange={onChangeCliente}
                             />
                             <label htmlFor="numero">Número</label>
                             <input 
                                 type="number"
                                 name="numero"
+                                value={form.numero}
                                 onChange={onChangeCliente}
                             />
                             <label htmlFor="complemento">Complemento</label>
@@ -186,6 +192,7 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                                 type="text"
                                 name="complemento"
                                 placeholder="Ex: Francisco Silva..."
+                                value={form.complemento}
                                 onChange={onChangeCliente}
                             />
                         </div>
@@ -196,6 +203,7 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                             type="text"
                             name="pontoDeReferencia"
                             placeholder="Ex: Francisco Silva..."
+                            value={form.pontoDeReferencia}
                             onChange={onChangeCliente}
                         />
                     </div>
@@ -208,6 +216,7 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                                     name="sexo"                
                                     id="feminino"
                                     value="F"  
+                                    checked={form.sexo == 'F'}
                                     onChange={onChangeSexo}  
                                 />
                                 <label htmlFor="feminino">Feminino</label>
@@ -218,6 +227,7 @@ export default function ModalClientes({ isOpen, closeModal, atualizaTabela }) {
                                     name="sexo"                
                                     id="masculino"
                                     value="M"  
+                                    checked={form.sexo == 'M'}
                                     onChange={onChangeSexo}  
                                 />
                                 <label htmlFor="masculino">Masculino</label>

@@ -15,7 +15,7 @@ ModalEdicaoClientes.propTypes = {
         cliente: PropTypes.string,
         telefone: PropTypes.string,
         endereco: PropTypes.string,
-        numero: PropTypes.string,
+        numero: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]),
         complemento: PropTypes.string,
         idbairro: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]),
         bairro: PropTypes.string,
@@ -98,10 +98,11 @@ export default function ModalEdicaoClientes({ isOpen, atualizaTabela, closeModal
         bairros.forEach((bairro) => {
             if(bairro[1] === event.target.value) {
                 const formAtualizado = { ...form };
-                formAtualizado.idBairro = bairro[0]
+                formAtualizado.idBairro = bairro[0];
+                formAtualizado.bairro = bairro[1];
 
                 setForm(formAtualizado)
-            };
+            }
         });
     };
 

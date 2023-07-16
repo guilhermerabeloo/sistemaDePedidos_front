@@ -43,7 +43,7 @@ export default function ModalExclusaoCliente({ isOpen, closeModal, idDeleteClien
                         className="btn-sim" 
                         onClick={() => {
                             deleteCliente();
-                            closeExclusao();
+                            closeModal();
                         }}
                     >
                         Sim

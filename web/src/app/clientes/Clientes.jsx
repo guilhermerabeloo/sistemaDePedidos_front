@@ -6,7 +6,6 @@ import { Paginacao } from '../../components/Paginacao';
 import { api } from '../../lib/api';
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { Helmet } from 'react-helmet';
 
 import { BsPlusLg, BsPencilSquare, BsFunnelFill, BsBackspace } from "react-icons/bs";
 
@@ -49,6 +48,10 @@ export default function Clientes() {
     });
 
     useEffect(() => {
+        document.title = 'Clientes';
+    }, []);
+
+    useEffect(() => {
         async function getClientes() {
             try {
                 const response = await api.get(
@@ -58,19 +61,19 @@ export default function Clientes() {
         
                 const indiceInicio = (paginaAtual - 1) * 10;
                 const indiceFinal = indiceInicio + 10;
-                const produtosPaginaAtual = data.slice(indiceInicio, indiceFinal);
+                const clientesPaginaAtual = data.slice(indiceInicio, indiceFinal);
 
                 const contagemDePaginas = Math.ceil(data.length / 10);
 
                 setQuantidadeDePaginas(contagemDePaginas)
-                setClientes(produtosPaginaAtual)
+                setClientes(clientesPaginaAtual)
             } catch(error) {
                 console.log(error)
             }
         }
     
         getClientes()
-    }, [atualizaTabela])
+    }, [atualizaTabela, paginaAtual])
 
     const handleClickEdicao = (clienteEdit) => {
         setEditCliente({
@@ -97,11 +100,6 @@ export default function Clientes() {
 
     return (
         <div id="content">
-            <div>
-                <Helmet>
-                    <title>Clientes</title>
-                </Helmet>
-            </div>
             <ModalClientes 
                 isOpen={activeModalNovo}
                 atualizaTabela={() => setAtualizaTabela(!atualizaTabela)}
