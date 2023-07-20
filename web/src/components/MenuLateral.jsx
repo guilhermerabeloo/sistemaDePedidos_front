@@ -61,7 +61,7 @@ export function MenuLateral({ propToggleExpandirGrid, menuExpandido }) {
                             <span className="icon-subitens"><BsCaretDownFill /></span>
                         </a>
                         <ul className={`itens-submenu ${activeSubMenu === 'pedido' ? 'exibirItens' : ''}`}>
-                            <li><a href="#">Entrega</a></li>
+                            <li><Link to="/pedidos/entrega">Entrega</Link></li>
                             <li><a href="#">Mesa</a></li>
                             <li><a href="#">Balcão</a></li>
                         </ul>
