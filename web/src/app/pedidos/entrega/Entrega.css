@@ -18,15 +18,71 @@
 }
 
 .categoriasPedido {
-    background-color: chartreuse;
+    display: flex;
+    justify-content: space-around;
     width: 100%;
     height: 15%;
 }
 
+.categoriasPedido div {
+    position: relative;
+  }
+
+.categoriasPedido div img{
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
+    width: 9vh;
+}
+
+.categoriasPedido div img:hover {
+    opacity: .9
+}
+
+.categoriasPedido div img:active {
+    transform: scale(0.95);
+}
+
+.categoria p {
+    position: absolute;
+    font-size: .8rem;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    pointer-events: none;
+}
+
 .itensPedido {
-    background-color: brown;
     height: 75%;
     width: 100%;
+}
+
+.adicionais {
+    margin: 0 auto;
+    height: 30%;
+    width: 90%;
+}
+
+.adicionaisOptions {
+    margin-top: .5rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.containerRadio {
+    width: 20%;
+    margin-bottom: .5rem;
+    display: flex;
+    align-items: center;
+}
+
+.containerRadio input:checked{
+    background-color: #9b0303;
+}
+
+.labelAdicional {
+    font-size: .8rem;
 }
 
 .rodapeItemPedido {
@@ -39,6 +95,11 @@
     display: flex;
     height: 100%;
     width: 65%;
+}
+
+.subTotalItem p {
+    margin-left: 2vw;
+    font-size: 1.2rem;
 }
 
 .btnItens {
