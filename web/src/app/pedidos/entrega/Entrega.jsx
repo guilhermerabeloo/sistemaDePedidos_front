@@ -9,6 +9,7 @@ import Bebida from '../../../assets/img/CategoriaBebida.png'
 import { api } from "../../../lib/api";
 import { useEffect, useState } from 'react'
 import { FormPizza } from '../../../components/FormPizza'
+import { ResumoPedido } from '../../../components/ResumoPedido'
 
 export default function Entrega() {
     const [ radioAdicionais, setRadioAdicionais ] = useState([])
@@ -88,7 +89,7 @@ export default function Entrega() {
                     </div>
                     <div className="rodapeItemPedido">
                         <div className="subTotalItem">
-                            <p>Sub-total..........................................</p><p>23,00</p>
+                            <p className='labelSubtotal'>Sub-total:</p><p className='valorSubtotal'>23,00</p>
                         </div>
                         <div className="btnItens">
                             <button className="btnLimpar">
@@ -100,9 +101,7 @@ export default function Entrega() {
                         </div>
                     </div>
                 </div>
-                <div className="resumoPedido">
-                    
-                </div>
+                <ResumoPedido />
             </div>
         </div>
     )

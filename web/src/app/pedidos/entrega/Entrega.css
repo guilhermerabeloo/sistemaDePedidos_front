@@ -129,6 +129,10 @@
     font-size: 1.2rem;
 }
 
+.labelSubtotal {
+    width: 80%;
+}
+
 .btnItens {
     display: flex;
     justify-content: center;

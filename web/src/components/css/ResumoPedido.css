@@ -1,0 +1,124 @@
+.clientePedido {
+    display: flex;
+    height: 15%;
+}
+
+.dadosEntrega {
+    height: 100%;
+    width: 85%;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
+.nomeClienteEntrega {
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+
+.telefoneEntraga,
+.enderecoEntrega{
+    font-size: .7rem;
+}
+
+.edicaoDadosEntraga {
+    height: 100%;
+    width: 15%;
+}
+
+.editDadosEntrega {
+    background: none;
+    width: 89%;
+    height: 100%;
+    border-radius: 0 10px 0 0;
+    box-shadow: none;
+    opacity: 1;
+}
+
+.editDadosEntrega:hover {
+    opacity: .7;
+}
+
+.iconEditDadosEntrega {
+    color: #191970;
+    font-size: 1rem;
+}
+
+.itensResumoPedido {
+    padding: 2%;
+    box-sizing: border-box;
+    height: 60%;
+    border-top: 2px dashed  rgb(150, 150, 150);
+    border-bottom: 2px dashed  rgb(150, 150, 150);
+}
+
+.divTabItens {
+    height: 95%;
+}
+
+.tabItensPedido {
+    width: 100%;
+}
+
+.itensResumoPedido {
+    text-align: left;
+    font-size: .8rem;
+}
+
+.taxaDeEntrega {
+    display: flex;
+}
+
+.taxaDeEntrega label {
+    width: 83%;
+}
+
+.taxaDeEntrega input {
+    width: 17%;
+}
+
+.totalPedido {
+    height: 25%;
+}
+
+.infoTotal {
+    padding: 2%;
+    box-sizing: border-box;
+    height: 63%;
+}
+
+.valorTotalPedido {
+    display: flex;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 3%;
+}
+
+.labelTotal {
+    width: 78%;
+}
+
+.formaPagamentoPedido {
+    font-size: .8rem;
+}
+
+.observacaoPedido {
+    font-size: .8rem;
+    color: blue;
+    text-decoration: underline;
+}
+
+.botoesControle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnCancelar {
+    color: white;
+    background-color: #9b0303;
+}
+
+.btnConfirmar {
+    background-color: rgb(0, 116, 52);
+    color: white;
+}
