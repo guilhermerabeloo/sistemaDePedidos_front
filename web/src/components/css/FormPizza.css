@@ -1,0 +1,63 @@
+.containerPizza {
+    height: 55%;
+    margin-left: 5%;
+}
+
+form input, select {
+    height: 5vh;
+    width: 9vw;
+    outline: unset;
+    padding: 3px;
+    border: 1px solid rgb(51, 51, 51);
+    border-radius: 10px;
+}
+
+.quantidade,
+.saboresPizza,
+.infoAdicionaisPizza {
+    margin-top: 1%;
+}
+
+.saboresPizza {
+    display: flex;
+    height: 10vh;
+
+}
+
+.sabores,
+.opcao1,
+.opcao2,
+.tamanho,
+.borda {
+    display: flex;
+    flex-direction: column;
+}
+
+.opcao1,
+.opcao2 {
+    width: 35%;
+    margin-left: 5%;
+}
+
+.opcao1 select,
+.opcao2 select {
+    width: 100%;
+}
+
+.infoAdicionaisPizza {
+    display: flex;
+    height: 10vh;
+}
+
+.tamanho {
+    margin-right: 5%;
+}
+
+.borda {
+    width: 35%;
+}
+
+.borda select {
+    width: 100%;
+}
+

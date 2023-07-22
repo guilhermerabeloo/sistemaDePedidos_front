@@ -8,6 +8,7 @@ import Bebida from '../../../assets/img/CategoriaBebida.png'
 
 import { api } from "../../../lib/api";
 import { useEffect, useState } from 'react'
+import { FormPizza } from '../../../components/FormPizza'
 
 export default function Entrega() {
     const [ radioAdicionais, setRadioAdicionais ] = useState([])
@@ -62,6 +63,7 @@ export default function Entrega() {
                         </div>
                     </div>
                     <div className="itensPedido">
+                        <FormPizza />
                         <div className="adicionais">
                             <label className='labelAdicionais' htmlFor="adicionais">Adicionais:</label>
                             <div className="adicionaisOptions">
@@ -69,7 +71,8 @@ export default function Entrega() {
                                     return (
                                         <div className="containerRadio" key={index}>
                                             <input 
-                                                type="checkbox" 
+                                                type="checkbox"
+                                                className='checkboxAdicional' 
                                                 name='adicionais'
                                                 id={adicional}
                                             />
@@ -78,6 +81,9 @@ export default function Entrega() {
                                     )
                                 })}
                             </div>
+                        </div>
+                        <div className="observacaoItemPedido">
+                            <p>Adicionar observação no item</p>
                         </div>
                     </div>
                     <div className="rodapeItemPedido">
