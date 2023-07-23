@@ -154,7 +154,8 @@
     width: 29%;
 }
 
-button {
+.botoesControle button,
+.btnItens button {
     height: 5vh;
     width: 8vw;
     margin: 0 .3rem 0 .3rem;
@@ -164,10 +165,12 @@ button {
     opacity: 1;
 }
 
-button:hover {
+.botoesControle button:hover,
+.btnItens button:hover {
     opacity: .9
 }
 
-button:active {
+.botoesControle button:active,
+.btnItens button:active {
     transform: scale(0.95);
 }

@@ -10,6 +10,8 @@ import { api } from "../../../lib/api";
 import { useEffect, useState } from 'react'
 import { FormPizza } from '../../../components/FormPizza'
 import { ResumoPedido } from '../../../components/ResumoPedido'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Entrega() {
     const [ radioAdicionais, setRadioAdicionais ] = useState([])
@@ -102,6 +104,7 @@ export default function Entrega() {
                     </div>
                 </div>
                 <ResumoPedido />
+                <ToastContainer pauseOnHover={false} />
             </div>
         </div>
     )
