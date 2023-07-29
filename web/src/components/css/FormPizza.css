@@ -1,6 +1,6 @@
 .containerPizza {
     height: 60%;
-    margin-left: 5%;
+
 }
 
 .containerPizza input, select {
@@ -23,14 +23,14 @@
 }
 
 .containerPizza select {
-    height: 5.5vh;
+    height: 5vh;
     width: 90%;
 }
 
+
 .cabecalhoItem input,
 .cabecalhoItem select{
-    margin-left: 2.3vw;
-    width: 15vw;
+    width: 100%;
 }
 
 .cabecalhoItem label {
@@ -45,23 +45,26 @@
 
 .cabecalhoItem {
     display: flex;
+    margin-left: 5%;
 }
 
 .saboresPizza {
     display: flex;
     height: 10vh;
+    margin-left: 5%;
 }
 
 .opcao2.hide {
     display: none;
 }
 
-.sabores,
 .quantidade,
 .tamanho,
 .borda {
+    margin-left: 2rem;
     display: flex;
     flex-direction: column;
+    width: 25%;
 }
 
 .cabecalhoItem {

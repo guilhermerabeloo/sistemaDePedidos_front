@@ -5,9 +5,30 @@ import { toast } from 'react-toastify';
 import { Adicionais } from './Adicionais';
 
 export function FormPizza () {
-    const [ pizzas, setPizzas ] = useState([])
-    const [ doisSabores, setDoisSabores ] = useState(false)
-    const [ isOpen, setIsOpen ] = useState(false)
+    const [ pizzas, setPizzas ] = useState([]);
+    const [ bordas, setBordas ] = useState([]);
+    const [ doisSabores, setDoisSabores ] = useState(false);
+    const [ isOpen, setIsOpen ] = useState(false);
+    const [ pizza, setPizza ] = useState({
+        quantidade: 1,
+        tamanho: '',
+        borda: { idborda: 1, borda: 'Catupiry', valor: 0.00 },
+        doisSabores: false,
+        option1: {
+            id: 0,
+            sabor: '', 
+            adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }], 
+            valor: 0.00 
+        },
+        option2: {
+            id: 0,
+            sabor: '', 
+            adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }], 
+            valor: 0.00 
+        },
+        adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }],
+        valor: 0.00
+    });
 
     useEffect(() => {
         async function getProdutos() {
@@ -25,14 +46,52 @@ export function FormPizza () {
         getProdutos();
     }, []);
 
+    useEffect(() => {
+        async function getBordas() {
+          try {
+            const response = await api.get("/bordas");
+            const data = response.data.data;
+            
+            setBordas(data);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        getBordas();
+    }, []);
+
     const handleChange_Sabores = (event) => {
         setDoisSabores(!doisSabores)
         
-        if(event.target.value === 'nao') {
+        const isDoisSabores = event.target.value === 'nao' ? false : true;
+        if(!isDoisSabores) {
             const sabor2 = document.getElementById('opcao2');
             sabor2.value = 0;
             sabor2.selectedIndex = 'Selecione';
+
+            const updatePizza = {...pizza}
+            updatePizza['option2'] = {
+                id: 0,
+                sabor: '', 
+                adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }], 
+                valor: 0.00 
+            }
+
+            if(updatePizza.option1.valor) {
+                updatePizza.option1.valor = updatePizza.option1.valor * 2;
+            }
+
+            setPizza(updatePizza)
+        } else {
+            const updatePizza = {...pizza};
+            updatePizza.doisSabores = isDoisSabores;
+
+            if(updatePizza.option1.valor) {
+                updatePizza.option1.valor = updatePizza.option1.valor / 2;
+            }
+            setPizza(updatePizza)
         }
+
     };
 
     const handleChange_OpcaoPizza = (option, event) => {
@@ -40,6 +99,15 @@ export function FormPizza () {
         const option2 = document.getElementById('opcao2');
 
         if(event.target.value == 0) {
+            const updatePizza = {...pizza}
+            updatePizza[option] = {
+                id: 0,
+                sabor: '', 
+                adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }], 
+                valor: 0.00 
+            }
+
+            setPizza(updatePizza)
             return
         }
 
@@ -55,10 +123,46 @@ export function FormPizza () {
             } else {
                 option2.selectedIndex = "Selecione";
             }
-
         }
+
+        const updatePizza = {...pizza};
+        const idpizza = event.target.selectedIndex;
+        const sabor = event.target.options[idpizza].getAttribute('data-pizza');
+        const valor = event.target.options[idpizza].getAttribute('data-valor');
+
+        updatePizza[option].id = idpizza;
+        updatePizza[option].sabor = sabor;
+        updatePizza[option].valor = doisSabores ? valor / 2 : valor;
+
+        setPizza(updatePizza)
     };
 
+    const handleChange_Quantidade = (event) => {
+        const updatePizza = {...pizza};
+        updatePizza.quantidade = event.target.value;
+        setPizza(updatePizza)
+    }
+
+    const handleChange_Tamanho = (event) => {
+        const updatePizza = {...pizza};
+        updatePizza.tamanho = event.target.value;
+        setPizza(updatePizza)
+    }
+
+    const handleChange_Borda = (event) => {
+        const updatePizza = {...pizza};
+        const idborda = event.target.selectedIndex;
+        const borda = event.target.options[idborda].getAttribute('data-borda');
+        const valor = event.target.options[idborda].getAttribute('data-valor');
+
+        updatePizza.borda.idborda = idborda;
+        updatePizza.borda.borda = borda;
+        updatePizza.borda.valor = valor;
+
+        setPizza(updatePizza)
+    }
+
+    console.log(pizza)
     return (
         <div className="containerPizza">
             <Adicionais 
@@ -71,23 +175,41 @@ export function FormPizza () {
                     <input 
                         type="number" 
                         id="quantidade"
+                        value={pizza.quantidade}
+                        onChange={event => handleChange_Quantidade(event)}
                     />
                 </div>
                 <div className="tamanho">
                     <label htmlFor="tamanho">Tamanho</label>
-                    <select name="tamanho" id="tamanho">
+                    <select 
+                        name="tamanho" 
+                        id="tamanho"
+                        onChange={event => handleChange_Tamanho(event)}
+                    >
                         <option value="g">Grande</option>
                         <option value="p">Pequena</option>
                     </select>
                 </div>
                 <div className="borda">
                     <label htmlFor="borda">Borda</label>
-                    <select name="borda" id="borda">
-                        <option value="catupiry">Catupiry</option>
-                        <option value="cheddar">Cheddar</option>
-                        <option value="semBorda">Sem borda</option>
-                        <option value="mussarela">Mussarela</option>
-                        <option value="chocolate">Chocolate</option>
+                    <select 
+                        name="borda" 
+                        id="borda"
+                        value={pizza.borda.borda}
+                        onChange={(event) => handleChange_Borda(event)}
+                    >
+                        {bordas.map((borda) => {
+                            return (
+                                <option 
+                                    key={borda.idborda} 
+                                    data-idborda={borda.idborda}
+                                    data-borda={borda.borda}
+                                    data-valor={borda.valor}
+                                >
+                                    {borda.borda}
+                                </option>
+                            )
+                        })}
                     </select>
                 </div>
             </div>
@@ -118,19 +240,28 @@ export function FormPizza () {
                             >
                                 {pizzas.map((pizza) => {
                                     return (
-                                        <option key={pizza.idproduto} value={pizza.idproduto}>{pizza.produto}</option>
+                                        <option 
+                                            key={pizza.idproduto} 
+                                            value={pizza.idproduto}
+                                            data-idpizza={pizza.idproduto}
+                                            data-pizza={pizza.produto}
+                                            data-sigla={pizza.sigla}
+                                            data-valor={pizza.preco}
+                                        >
+                                            {pizza.produto}
+                                        </option>
                                     )
                                 })}
                             </select>
                         </td>
                         <td 
-                            style={{ color: "blue", textDecoration: "underline" }}
+                            style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
                             onClick={() => setIsOpen(true)}
                         >
                             Adicionais
                         </td>
                         <td style={{ textAlign: "right" }}>
-                            30,00
+                            {pizza.option1.valor}
                         </td>
                     </tr>
                     <tr className={doisSabores ? 'opcao2' : 'opcao2 hide'}>
@@ -147,19 +278,28 @@ export function FormPizza () {
                             >
                                 {pizzas.map((pizza) => {
                                     return (
-                                        <option key={pizza.idproduto} value={pizza.idproduto}>{pizza.produto}</option>
+                                        <option 
+                                            key={pizza.idproduto} 
+                                            value={pizza.idproduto}
+                                            data-idpizza={pizza.idproduto}
+                                            data-pizza={pizza.produto}
+                                            data-sigla={pizza.sigla}
+                                            data-valor={pizza.preco}
+                                        >
+                                        {pizza.produto}
+                                    </option>
                                     )
                                 })}
                             </select>
                         </td>
                         <td 
-                            style={{ color: "blue", textDecoration: "underline" }}
+                            style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
                             onClick={() => setIsOpen(true)}
                         >
                             Adicionais
                         </td>
                         <td style={{ textAlign: "right" }}>
-                            24,00
+                            {pizza.option2.valor}
                         </td>
                     </tr>
                 </table>

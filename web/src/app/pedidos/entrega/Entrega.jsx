@@ -55,9 +55,8 @@ export default function Entrega() {
                         />
                         <div 
                             className="infoAdicionaisPizza"
-                            onClick={() => setIsOpen(true)}
                         >
-                            <p>Adicionais no item</p>
+                            <p onClick={() => setIsOpen(true)}>Adicionais no item</p>
                         </div>
                         <div className="observacaoItemPedido">
                             <label htmlFor="observacoes">Observações do pedido:</label><br />
