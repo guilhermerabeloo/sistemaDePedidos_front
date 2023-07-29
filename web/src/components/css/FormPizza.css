@@ -1,63 +1,85 @@
 .containerPizza {
-    height: 55%;
+    height: 60%;
     margin-left: 5%;
 }
 
-form input, select {
-    height: 5vh;
-    width: 9vw;
+.containerPizza input, select {
     outline: unset;
     padding: 3px;
     border: 1px solid rgb(51, 51, 51);
     border-radius: 10px;
 }
 
-.quantidade,
+
+.containerPizza input[type=number]::-webkit-inner-spin-button, 
+.containerPizza input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.containerPizza input {
+    height: 4vh;
+    text-align: center;
+}
+
+.containerPizza select {
+    height: 5.5vh;
+    width: 90%;
+}
+
+.cabecalhoItem input,
+.cabecalhoItem select{
+    margin-left: 2.3vw;
+    width: 15vw;
+}
+
+.cabecalhoItem label {
+    font-size: .9rem;
+}
+
+.cabecalhoItem,
 .saboresPizza,
 .infoAdicionaisPizza {
     margin-top: 1%;
 }
 
+.cabecalhoItem {
+    display: flex;
+}
+
 .saboresPizza {
     display: flex;
     height: 10vh;
+}
 
+.opcao2.hide {
+    display: none;
 }
 
 .sabores,
-.opcao1,
-.opcao2,
+.quantidade,
 .tamanho,
 .borda {
     display: flex;
     flex-direction: column;
 }
 
-.opcao1,
-.opcao2 {
-    width: 35%;
-    margin-left: 5%;
+.cabecalhoItem {
+    height: 30%;
 }
 
-.opcao1 select,
-.opcao2 select {
-    width: 100%;
+.saboresPizza {
+    position: relative;
+    height: 50%;
 }
 
-.infoAdicionaisPizza {
-    display: flex;
-    height: 10vh;
+.tabSabores {
+    position: absolute;
+    top: 0;
+    width: 95%;
 }
 
-.tamanho {
-    margin-right: 5%;
+.tabSabores tr {
+    height: 3vh;
+    font-size: .9rem;
 }
-
-.borda {
-    width: 35%;
-}
-
-.borda select {
-    width: 100%;
-}
-

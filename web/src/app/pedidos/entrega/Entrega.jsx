@@ -6,34 +6,16 @@ import Pastel from '../../../assets/img/CategoriaPastel.png'
 import Coxinha from '../../../assets/img/CategoriaCoxinha.png'
 import Bebida from '../../../assets/img/CategoriaBebida.png'
 
-import { api } from "../../../lib/api";
-import { useEffect, useState } from 'react'
 import { FormPizza } from '../../../components/FormPizza'
 import { ResumoPedido } from '../../../components/ResumoPedido'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Adicionais } from '../../../components/Adicionais'
+
+import { useState } from 'react'
 
 export default function Entrega() {
-    const [ radioAdicionais, setRadioAdicionais ] = useState([])
-
-    useEffect(() => {
-        async function getAdicionais() {
-          try {
-            const response = await api.get("/ingredientes");
-    
-            const data = response.data.data;
-            const adicionais = data.map((adicional) => {
-                return adicional.ingrediente
-            })
-
-            setRadioAdicionais(adicionais);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-    
-        getAdicionais();
-      }, []);
+    const [ isOpen, setIsOpen ] = useState(false);
 
     return (
         <div id="content">
@@ -67,26 +49,19 @@ export default function Entrega() {
                     </div>
                     <div className="itensPedido">
                         <FormPizza />
-                        <div className="adicionais">
-                            <label className='labelAdicionais' htmlFor="adicionais">Adicionais:</label>
-                            <div className="adicionaisOptions">
-                                {radioAdicionais.map((adicional, index) => {
-                                    return (
-                                        <div className="containerRadio" key={index}>
-                                            <input 
-                                                type="checkbox"
-                                                className='checkboxAdicional' 
-                                                name='adicionais'
-                                                id={adicional}
-                                            />
-                                            <label className="labelAdicional" htmlFor={adicional}>{adicional}</label>
-                                        </div>
-                                    )
-                                })}
-                            </div>
+                        <Adicionais 
+                            isOpen={isOpen}
+                            closeModal={() => setIsOpen(!isOpen)}
+                        />
+                        <div 
+                            className="infoAdicionaisPizza"
+                            onClick={() => setIsOpen(true)}
+                        >
+                            <p>Adicionais no item</p>
                         </div>
                         <div className="observacaoItemPedido">
-                            <p>Adicionar observação no item</p>
+                            <label htmlFor="observacoes">Observações do pedido:</label><br />
+                            <textarea name="observacoes" id="observacoes" ></textarea>
                         </div>
                     </div>
                     <div className="rodapeItemPedido">
