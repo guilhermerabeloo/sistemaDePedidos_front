@@ -6,6 +6,7 @@
 
 .adicionaisOptions {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -54,4 +55,8 @@
 #modal button.btn-fecharModal {
     top: 2.4vh;
     right: 2.4vw;
+}
+
+.adicionais .botoesControle {
+    margin-top: 5%;
 }

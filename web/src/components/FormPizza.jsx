@@ -9,6 +9,8 @@ export function FormPizza () {
     const [ bordas, setBordas ] = useState([]);
     const [ doisSabores, setDoisSabores ] = useState(false);
     const [ isOpen, setIsOpen ] = useState(false);
+    const [ optionAdicionais, setOptionAdicionais ] = useState('')
+    const [ adicionaisSelecionados, setAdicionaisSelecionados ] = useState([])
     const [ pizza, setPizza ] = useState({
         quantidade: 1,
         tamanho: '',
@@ -17,18 +19,19 @@ export function FormPizza () {
         option1: {
             id: 0,
             sabor: '', 
-            adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }], 
+            adicionais: [], 
             valor: 0.00 
         },
         option2: {
             id: 0,
             sabor: '', 
-            adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }], 
+            adicionais: [], 
             valor: 0.00 
         },
-        adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }],
+        adicionais: [],
         valor: 0.00
     });
+    const [ valorUnitario, setValorUnitario ] = useState({ option1: 0, option2: 0 });
 
     useEffect(() => {
         async function getProdutos() {
@@ -73,7 +76,7 @@ export function FormPizza () {
             updatePizza['option2'] = {
                 id: 0,
                 sabor: '', 
-                adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }], 
+                adicionais: [], 
                 valor: 0.00 
             }
 
@@ -103,7 +106,7 @@ export function FormPizza () {
             updatePizza[option] = {
                 id: 0,
                 sabor: '', 
-                adicionais: [{ idadicional: 0, adicional: '', valor: 0.00 }], 
+                adicionais: [], 
                 valor: 0.00 
             }
 
@@ -134,6 +137,7 @@ export function FormPizza () {
         updatePizza[option].sabor = sabor;
         updatePizza[option].valor = doisSabores ? valor / 2 : valor;
 
+
         setPizza(updatePizza)
     };
 
@@ -162,12 +166,26 @@ export function FormPizza () {
         setPizza(updatePizza)
     }
 
-    console.log(pizza)
+    const handleChange_SelecionaAdicionais = (adicionais) => {
+        const updatePizza = {...pizza};
+        updatePizza[optionAdicionais].adicionais = adicionais;
+        
+        setPizza(updatePizza)
+    }
+
+    const selecionaAdicionais = (option) => {
+        const adicionaisPizza = pizza[option].adicionais;
+
+        setAdicionaisSelecionados(adicionaisPizza);
+    }
+
     return (
         <div className="containerPizza">
             <Adicionais 
                 isOpen={isOpen}
                 closeModal={() => setIsOpen(!isOpen)}
+                selecaoDeAdicionais={handleChange_SelecionaAdicionais}
+                adicionaisPadrao={adicionaisSelecionados}
             />
             <div className="cabecalhoItem">
                 <div className="quantidade">
@@ -256,7 +274,11 @@ export function FormPizza () {
                         </td>
                         <td 
                             style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
-                            onClick={() => setIsOpen(true)}
+                            onClick={() => {
+                                setIsOpen(true)
+                                setOptionAdicionais('option1')
+                                selecionaAdicionais('option1')
+                            }}
                         >
                             Adicionais
                         </td>
@@ -294,7 +316,11 @@ export function FormPizza () {
                         </td>
                         <td 
                             style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
-                            onClick={() => setIsOpen(true)}
+                            onClick={() => {
+                                setIsOpen(true)
+                                setOptionAdicionais('option2')
+                                selecionaAdicionais('option2')
+                            }}
                         >
                             Adicionais
                         </td>
