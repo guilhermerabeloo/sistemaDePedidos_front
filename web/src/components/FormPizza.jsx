@@ -1,10 +1,15 @@
 import '../components/css/FormPizza.css';
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { api } from '../lib/api';
 import { toast } from 'react-toastify';
 import { Adicionais } from './Adicionais';
 
-export function FormPizza () {
+FormPizza.propTypes = {
+    subtotal: PropTypes.func.isRequired,
+};
+
+export function FormPizza ({ subtotal }) {
     const [ pizzas, setPizzas ] = useState([]);
     const [ bordas, setBordas ] = useState([]);
     const [ doisSabores, setDoisSabores ] = useState(false);
@@ -63,6 +68,30 @@ export function FormPizza () {
         getBordas();
     }, []);
 
+    const atualizaValorUnitario = (updatePizza) => {
+        const updateValorUnitario = {...valorUnitario};
+        const pizza1 = updatePizza.option1;
+        const pizza2 = updatePizza.option2;
+        let valorUnitarioPizza1 = Number(pizza1.valor)
+        let valorUnitarioPizza2 = Number(pizza2.valor)
+
+        pizza1.adicionais.forEach((adicional) => {
+            valorUnitarioPizza1 += Number(adicional.pizza);
+        });
+        pizza2.adicionais.forEach((adicional) => {
+            valorUnitarioPizza2 += Number(adicional.pizza);
+        });
+
+        updateValorUnitario.option1 = valorUnitarioPizza1;
+        updateValorUnitario.option2 = valorUnitarioPizza2;
+
+        updatePizza.valor = updateValorUnitario.option1 + updateValorUnitario.option2
+
+        setPizza(updatePizza)
+        setValorUnitario(updateValorUnitario)
+        subtotal(updateValorUnitario.option1 + updateValorUnitario.option2)
+    }
+
     const handleChange_Sabores = (event) => {
         setDoisSabores(!doisSabores)
         
@@ -85,6 +114,7 @@ export function FormPizza () {
             }
 
             setPizza(updatePizza)
+            atualizaValorUnitario(updatePizza)
         } else {
             const updatePizza = {...pizza};
             updatePizza.doisSabores = isDoisSabores;
@@ -92,7 +122,9 @@ export function FormPizza () {
             if(updatePizza.option1.valor) {
                 updatePizza.option1.valor = updatePizza.option1.valor / 2;
             }
+
             setPizza(updatePizza)
+            atualizaValorUnitario(updatePizza)
         }
 
     };
@@ -111,6 +143,7 @@ export function FormPizza () {
             }
 
             setPizza(updatePizza)
+            atualizaValorUnitario(updatePizza)
             return
         }
 
@@ -137,20 +170,22 @@ export function FormPizza () {
         updatePizza[option].sabor = sabor;
         updatePizza[option].valor = doisSabores ? valor / 2 : valor;
 
-
         setPizza(updatePizza)
+        atualizaValorUnitario(updatePizza)
     };
 
     const handleChange_Quantidade = (event) => {
         const updatePizza = {...pizza};
         updatePizza.quantidade = event.target.value;
         setPizza(updatePizza)
+        atualizaValorUnitario(updatePizza)
     }
 
     const handleChange_Tamanho = (event) => {
         const updatePizza = {...pizza};
         updatePizza.tamanho = event.target.value;
         setPizza(updatePizza)
+        atualizaValorUnitario(updatePizza)
     }
 
     const handleChange_Borda = (event) => {
@@ -164,6 +199,7 @@ export function FormPizza () {
         updatePizza.borda.valor = valor;
 
         setPizza(updatePizza)
+        atualizaValorUnitario(updatePizza)
     }
 
     const handleChange_SelecionaAdicionais = (adicionais) => {
@@ -171,6 +207,7 @@ export function FormPizza () {
         updatePizza[optionAdicionais].adicionais = adicionais;
         
         setPizza(updatePizza)
+        atualizaValorUnitario(updatePizza)
     }
 
     const selecionaAdicionais = (option) => {
@@ -283,7 +320,7 @@ export function FormPizza () {
                             Adicionais
                         </td>
                         <td style={{ textAlign: "right" }}>
-                            {pizza.option1.valor}
+                            {valorUnitario.option1}
                         </td>
                     </tr>
                     <tr className={doisSabores ? 'opcao2' : 'opcao2 hide'}>
@@ -325,7 +362,7 @@ export function FormPizza () {
                             Adicionais
                         </td>
                         <td style={{ textAlign: "right" }}>
-                            {pizza.option2.valor}
+                            {valorUnitario.option2}
                         </td>
                     </tr>
                 </table>

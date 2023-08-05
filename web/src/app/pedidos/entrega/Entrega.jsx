@@ -16,6 +16,12 @@ import { useState } from 'react'
 
 export default function Entrega() {
     const [ isOpen, setIsOpen ] = useState(false);
+    const [ subtotal, setSubtotal ] = useState(0);
+
+    const handleChange_subtotal = (valor) => {
+        console.log(valor)
+        setSubtotal(valor);
+    }
 
     return (
         <div id="content">
@@ -48,7 +54,9 @@ export default function Entrega() {
                         </div>
                     </div>
                     <div className="itensPedido">
-                        <FormPizza />
+                        <FormPizza 
+                            subtotal={handleChange_subtotal}
+                        />
                         <Adicionais 
                             isOpen={isOpen}
                             closeModal={() => setIsOpen(!isOpen)}
@@ -65,7 +73,7 @@ export default function Entrega() {
                     </div>
                     <div className="rodapeItemPedido">
                         <div className="subTotalItem">
-                            <p className='labelSubtotal'>Sub-total:</p><p className='valorSubtotal'>23,00</p>
+                            <p className='labelSubtotal'>Sub-total:</p><p className='valorSubtotal'>{subtotal}</p>
                         </div>
                         <div className="btnItens">
                             <button className="btnLimpar">

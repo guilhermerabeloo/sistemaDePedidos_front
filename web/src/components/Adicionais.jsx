@@ -53,7 +53,7 @@ export function Adicionais({ isOpen, closeModal, selecaoDeAdicionais, adicionais
             setAdicionaisSelecionados(updateAdicionais);
         } else {
             const deleteAdicional = updateAdicionais.filter((adicional) => {
-                return adicional.id !== event.target.getAttribute('data-idadicional');
+                return adicional.idadicional !== event.target.getAttribute('data-idadicional');
             });
 
             setAdicionaisSelecionados(deleteAdicional);
