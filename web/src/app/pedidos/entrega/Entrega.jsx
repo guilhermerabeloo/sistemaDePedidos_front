@@ -8,20 +8,32 @@ import Bebida from '../../../assets/img/CategoriaBebida.png'
 
 import { FormPizza } from '../../../components/FormPizza'
 import { ResumoPedido } from '../../../components/ResumoPedido'
+import { Adicionais } from '../../../components/Adicionais'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Adicionais } from '../../../components/Adicionais'
 
 import { useState } from 'react'
 
 export default function Entrega() {
     const [ isOpen, setIsOpen ] = useState(false);
     const [ subtotal, setSubtotal ] = useState(0);
+    const [ item, setItem ] = useState({});
+    const [ itemParaResumo, setItemParaResumo ] = useState({});
+    const [ limpaItem, setLimpaItem ] = useState(false);
 
     const handleChange_subtotal = (valor) => {
-        console.log(valor)
         setSubtotal(valor);
-    }
+    };
+
+    const handleChange_Item = (itemAdd) => {
+        setItem(itemAdd);
+    };
+
+    const adicionaItem = () => {
+        const updateItem = JSON.parse(JSON.stringify(item));
+        setItemParaResumo(updateItem);
+        setLimpaItem(!limpaItem);
+    };
 
     return (
         <div id="content">
@@ -56,6 +68,9 @@ export default function Entrega() {
                     <div className="itensPedido">
                         <FormPizza 
                             subtotal={handleChange_subtotal}
+                            pizzaAdd={handleChange_Item}
+                            limpaItem={limpaItem}
+                            setLimpaItem={setLimpaItem}
                         />
                         <Adicionais 
                             isOpen={isOpen}
@@ -79,13 +94,18 @@ export default function Entrega() {
                             <button className="btnLimpar">
                                 Limpar
                             </button>
-                            <button className="btnAdicionar">
+                            <button 
+                                className="btnAdicionar"
+                                onClick={adicionaItem}
+                            >
                                 Adicionar
                             </button>
                         </div>
                     </div>
                 </div>
-                <ResumoPedido />
+                <ResumoPedido 
+                    itemAdicionado={itemParaResumo}
+                />
                 <ToastContainer pauseOnHover={false} />
             </div>
         </div>

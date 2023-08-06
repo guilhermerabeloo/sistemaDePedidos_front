@@ -7,9 +7,12 @@ import { Adicionais } from './Adicionais';
 
 FormPizza.propTypes = {
     subtotal: PropTypes.func.isRequired,
+    pizzaAdd: PropTypes.func,
+    limpaItem: PropTypes.bool.isRequired,
+    setLimpaItem: PropTypes.func,
 };
 
-export function FormPizza ({ subtotal }) {
+export function FormPizza ({ subtotal, pizzaAdd, limpaItem, setLimpaItem }) {
     const [ pizzas, setPizzas ] = useState([]);
     const [ bordas, setBordas ] = useState([]);
     const [ doisSabores, setDoisSabores ] = useState(false);
@@ -17,6 +20,7 @@ export function FormPizza ({ subtotal }) {
     const [ optionAdicionais, setOptionAdicionais ] = useState('')
     const [ adicionaisSelecionados, setAdicionaisSelecionados ] = useState([])
     const [ pizza, setPizza ] = useState({
+        sigla: 'PZZ',
         quantidade: 1,
         tamanho: '',
         borda: { idborda: 1, borda: 'Catupiry', valor: 0.00 },
@@ -68,6 +72,37 @@ export function FormPizza ({ subtotal }) {
         getBordas();
     }, []);
 
+    useEffect(() => {
+        if(limpaItem) {
+            setPizza({
+                sigla: 'PZZ',
+                quantidade: 1,
+                tamanho: '',
+                borda: { idborda: 1, borda: 'Catupiry', valor: 0.00 },
+                doisSabores: false,
+                option1: {
+                    id: 0,
+                    sabor: '', 
+                    adicionais: [], 
+                    valor: 0.00 
+                },
+                option2: {
+                    id: 0,
+                    sabor: '', 
+                    adicionais: [], 
+                    valor: 0.00 
+                },
+                adicionais: [],
+                valor: 0.00
+            });
+
+            setValorUnitario({ option1: 0, option2: 0 });
+            subtotal(0);
+            setDoisSabores(false)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [limpaItem]);
+
     const atualizaValorUnitario = (updatePizza) => {
         const updateValorUnitario = {...valorUnitario};
         const pizza1 = updatePizza.option1;
@@ -90,9 +125,12 @@ export function FormPizza ({ subtotal }) {
         setPizza(updatePizza)
         setValorUnitario(updateValorUnitario)
         subtotal(updateValorUnitario.option1 + updateValorUnitario.option2)
+        pizzaAdd(updatePizza)
+        setLimpaItem(false)
     }
 
     const handleChange_Sabores = (event) => {
+        setLimpaItem(false)
         setDoisSabores(!doisSabores)
         
         const isDoisSabores = event.target.value === 'nao' ? false : true;
@@ -108,11 +146,12 @@ export function FormPizza ({ subtotal }) {
                 adicionais: [], 
                 valor: 0.00 
             }
+            updatePizza.doisSabores = false;
 
             if(updatePizza.option1.valor) {
                 updatePizza.option1.valor = updatePizza.option1.valor * 2;
             }
-
+            
             setPizza(updatePizza)
             atualizaValorUnitario(updatePizza)
         } else {
@@ -162,9 +201,14 @@ export function FormPizza ({ subtotal }) {
         }
 
         const updatePizza = {...pizza};
-        const idpizza = event.target.selectedIndex;
-        const sabor = event.target.options[idpizza].getAttribute('data-pizza');
-        const valor = event.target.options[idpizza].getAttribute('data-valor');
+        const selectedValue = parseInt(event.target.value);
+        const selectedOption = Array.from(event.target.options).find((option) => {
+            return parseInt(option.value) === selectedValue;
+        });
+
+        const idpizza = selectedOption.getAttribute('data-idpizza');
+        const sabor = selectedOption.getAttribute('data-pizza');
+        const valor = selectedOption.getAttribute('data-valor');
 
         updatePizza[option].id = idpizza;
         updatePizza[option].sabor = sabor;
@@ -179,6 +223,7 @@ export function FormPizza ({ subtotal }) {
         updatePizza.quantidade = event.target.value;
         setPizza(updatePizza)
         atualizaValorUnitario(updatePizza)
+        setLimpaItem(false)
     }
 
     const handleChange_Tamanho = (event) => {
@@ -186,6 +231,7 @@ export function FormPizza ({ subtotal }) {
         updatePizza.tamanho = event.target.value;
         setPizza(updatePizza)
         atualizaValorUnitario(updatePizza)
+        setLimpaItem(false)
     }
 
     const handleChange_Borda = (event) => {
@@ -200,6 +246,7 @@ export function FormPizza ({ subtotal }) {
 
         setPizza(updatePizza)
         atualizaValorUnitario(updatePizza)
+        setLimpaItem(false)
     }
 
     const handleChange_SelecionaAdicionais = (adicionais) => {
@@ -208,12 +255,14 @@ export function FormPizza ({ subtotal }) {
         
         setPizza(updatePizza)
         atualizaValorUnitario(updatePizza)
+        setLimpaItem(false)
     }
 
     const selecionaAdicionais = (option) => {
         const adicionaisPizza = pizza[option].adicionais;
 
         setAdicionaisSelecionados(adicionaisPizza);
+        setLimpaItem(false)
     }
 
     return (
@@ -270,101 +319,107 @@ export function FormPizza ({ subtotal }) {
             </div>
             <div className="saboresPizza">
                 <table className='tabSabores'>
-                    <tr>
-                        <td style={{ width: "20%" }}>2 Sabores?</td>
-                        <td style={{ width: "40%" }}>Opção 1</td>
-                        <td style={{ width: "20%" }}></td>
-                        <td style={{ width: "20%", textAlign: "right" }}>Valor unitário</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <select 
-                                name="sabores" 
-                                id="sabores"
-                                onChange={(event) => handleChange_Sabores(event)}
+                    <tbody>
+
+                        <tr>
+                            <td style={{ width: "20%" }}>2 Sabores?</td>
+                            <td style={{ width: "40%" }}>Opção 1</td>
+                            <td style={{ width: "20%" }}></td>
+                            <td style={{ width: "20%", textAlign: "right" }}>Valor unitário</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select 
+                                    name="sabores" 
+                                    id="sabores"
+                                    onChange={(event) => handleChange_Sabores(event)}
+                                    value={pizza.doisSabores ? 'sim' : 'nao'}
+                                >
+                                    <option value="nao">Não</option>
+                                    <option value="sim">Sim</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select 
+                                    name="opcao1" 
+                                    id="opcao1"
+                                    onChange={(event) => handleChange_OpcaoPizza("option1", event)}
+                                    value={pizza.option1.id}
+                                >
+                                    {pizzas.map((pizza) => {
+                                        return (
+                                            <option 
+                                                key={pizza.idproduto} 
+                                                value={pizza.idproduto}
+                                                data-idpizza={pizza.idproduto}
+                                                data-pizza={pizza.produto}
+                                                data-sigla={pizza.sigla}
+                                                data-valor={pizza.preco}
+                                            >
+                                                {pizza.produto}
+                                            </option>
+                                        )
+                                    })}
+                                </select>
+                            </td>
+                            <td 
+                                style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+                                onClick={() => {
+                                    setIsOpen(true)
+                                    setOptionAdicionais('option1')
+                                    selecionaAdicionais('option1')
+                                }}
                             >
-                                <option value="nao">Não</option>
-                                <option value="sim">Sim</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select 
-                                name="opcao1" 
-                                id="opcao1"
-                                onChange={(event) => handleChange_OpcaoPizza("option1", event)}
-                            >
-                                {pizzas.map((pizza) => {
-                                    return (
-                                        <option 
-                                            key={pizza.idproduto} 
-                                            value={pizza.idproduto}
-                                            data-idpizza={pizza.idproduto}
-                                            data-pizza={pizza.produto}
-                                            data-sigla={pizza.sigla}
-                                            data-valor={pizza.preco}
-                                        >
+                                Adicionais
+                            </td>
+                            <td style={{ textAlign: "right" }} value={valorUnitario.option1}>
+                                {valorUnitario.option1}
+                            </td>
+                        </tr>
+                        <tr className={doisSabores ? 'opcao2' : 'opcao2 hide'}>
+                            <td></td>
+                            <td>Opção 2</td>
+                        </tr>
+                        <tr className={doisSabores ? 'opcao2' : 'opcao2 hide'}>
+                            <td></td>
+                            <td>
+                                <select 
+                                    name="opcao2" 
+                                    id="opcao2"
+                                    onChange={(event) => handleChange_OpcaoPizza("option2", event)}
+                                    value={pizza.option2.id}
+                                >
+                                    {pizzas.map((pizza) => {
+                                        return (
+                                            <option 
+                                                key={pizza.idproduto} 
+                                                value={pizza.idproduto}
+                                                data-idpizza={pizza.idproduto}
+                                                data-pizza={pizza.produto}
+                                                data-sigla={pizza.sigla}
+                                                data-valor={pizza.preco}
+                                            >
                                             {pizza.produto}
                                         </option>
-                                    )
-                                })}
-                            </select>
-                        </td>
-                        <td 
-                            style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
-                            onClick={() => {
-                                setIsOpen(true)
-                                setOptionAdicionais('option1')
-                                selecionaAdicionais('option1')
-                            }}
-                        >
-                            Adicionais
-                        </td>
-                        <td style={{ textAlign: "right" }}>
-                            {valorUnitario.option1}
-                        </td>
-                    </tr>
-                    <tr className={doisSabores ? 'opcao2' : 'opcao2 hide'}>
-                        <td></td>
-                        <td>Opção 2</td>
-                    </tr>
-                    <tr className={doisSabores ? 'opcao2' : 'opcao2 hide'}>
-                        <td></td>
-                        <td>
-                            <select 
-                                name="opcao2" 
-                                id="opcao2"
-                                onChange={(event) => handleChange_OpcaoPizza("option2", event)}
+                                        )
+                                    })}
+                                </select>
+                            </td>
+                            <td 
+                                style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+                                onClick={() => {
+                                    setIsOpen(true)
+                                    setOptionAdicionais('option2')
+                                    selecionaAdicionais('option2')
+                                }}
                             >
-                                {pizzas.map((pizza) => {
-                                    return (
-                                        <option 
-                                            key={pizza.idproduto} 
-                                            value={pizza.idproduto}
-                                            data-idpizza={pizza.idproduto}
-                                            data-pizza={pizza.produto}
-                                            data-sigla={pizza.sigla}
-                                            data-valor={pizza.preco}
-                                        >
-                                        {pizza.produto}
-                                    </option>
-                                    )
-                                })}
-                            </select>
-                        </td>
-                        <td 
-                            style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
-                            onClick={() => {
-                                setIsOpen(true)
-                                setOptionAdicionais('option2')
-                                selecionaAdicionais('option2')
-                            }}
-                        >
-                            Adicionais
-                        </td>
-                        <td style={{ textAlign: "right" }}>
-                            {valorUnitario.option2}
-                        </td>
-                    </tr>
+                                Adicionais
+                            </td>
+                            <td style={{ textAlign: "right" }} value={valorUnitario.option2}>
+                                {valorUnitario.option2}
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

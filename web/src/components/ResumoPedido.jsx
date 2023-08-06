@@ -1,7 +1,25 @@
 import '../components/css/ResumoPedido.css'
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { BsPencilSquare } from "react-icons/bs";
 
-export function ResumoPedido() {
+ResumoPedido.propTypes = {
+    itemAdicionado: PropTypes.object.isRequired,
+};
+
+export function ResumoPedido({ itemAdicionado }) {
+    const [ itensPedido, setItensPedido ] = useState([]);
+
+    useEffect(() => {
+        setItensPedido(prevItensPedido => {
+            const updateItens = [...prevItensPedido];
+            if (itemAdicionado.quantidade) {
+              updateItens.push(itemAdicionado);
+            }
+            return updateItens;
+          });
+    }, [ itemAdicionado ]);
+
     return (
         <div className="resumoPedido">
             <div className="clientePedido">
@@ -25,11 +43,19 @@ export function ResumoPedido() {
                                 <th style={{ width: "70%"}}>Item</th>
                                 <th style={{ width: "17%"}}>Valor</th>
                             </tr>
-                            <tr>
-                                <td>1x</td>
-                                <td>PIZ-Portuguesa</td>
-                                <td>25,00</td>
-                            </tr>
+                            {itensPedido.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.quantidade}</td>
+                                        <td>
+                                            {`${item.sigla}-${item.option1.sabor}`}
+                                            {item.doisSabores && <br />}
+                                            {item.doisSabores && `${item.sigla}-${item.option2.sabor}`}
+                                        </td>
+                                        <td>{item.valor}</td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </div>

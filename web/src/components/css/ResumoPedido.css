@@ -59,6 +59,12 @@
     width: 100%;
 }
 
+.tabItensPedido td {
+    font-size: .7rem;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
 .itensResumoPedido {
     text-align: left;
     font-size: .8rem;
