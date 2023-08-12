@@ -1,7 +1,8 @@
 import '../components/css/ResumoPedido.css'
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPencilSquare, BsBackspace } from "react-icons/bs";
+import { v4 as uuidv4 } from 'uuid';
 
 ResumoPedido.propTypes = {
     itemAdicionado: PropTypes.object.isRequired,
@@ -11,14 +12,24 @@ export function ResumoPedido({ itemAdicionado }) {
     const [ itensPedido, setItensPedido ] = useState([]);
 
     useEffect(() => {
-        setItensPedido(prevItensPedido => {
-            const updateItens = [...prevItensPedido];
-            if (itemAdicionado.quantidade) {
-              updateItens.push(itemAdicionado);
-            }
-            return updateItens;
-          });
-    }, [ itemAdicionado ]);
+        if (itemAdicionado.quantidade) {
+            setItensPedido(prevItensPedido => {
+                const updateItens = [...prevItensPedido];
+                const novoItem = { ...itemAdicionado, id: uuidv4() };
+                updateItens.push(novoItem);
+                return updateItens;
+            });
+        }
+    }, [itemAdicionado]);
+
+    const deleteItem = (id) => {
+        const itens = [ ...itensPedido ];
+        const deleteItens = itens.filter((item) => {
+            return item.id !== id
+        });
+
+        setItensPedido(deleteItens);
+    };
 
     return (
         <div className="resumoPedido">
@@ -39,9 +50,10 @@ export function ResumoPedido({ itemAdicionado }) {
                     <table className='tabItensPedido'>
                         <tbody>
                             <tr>
-                                <th style={{ width: "13%"}}>Qtd</th>
+                                <th style={{ width: "10%"}}>Qtd</th>
                                 <th style={{ width: "70%"}}>Item</th>
-                                <th style={{ width: "17%"}}>Valor</th>
+                                <th style={{ width: "10%"}}>Valor</th>
+                                <th style={{ width: "10%"}}></th>
                             </tr>
                             {itensPedido.map((item, index) => {
                                 return (
@@ -53,6 +65,12 @@ export function ResumoPedido({ itemAdicionado }) {
                                             {item.doisSabores && `${item.sigla}-${item.option2.sabor}`}
                                         </td>
                                         <td>{item.valor}</td>
+                                        <td>
+                                            <BsBackspace
+                                                className="btn-delete"
+                                                onClick={() => deleteItem(item.id)}
+                                            />
+                                        </td>
                                     </tr>
                                 )
                             })}
