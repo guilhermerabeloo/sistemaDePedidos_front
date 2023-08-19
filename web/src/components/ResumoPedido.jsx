@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { BsPencilSquare, BsBackspace } from "react-icons/bs";
 import { v4 as uuidv4 } from 'uuid';
+import ModalEdicaoItem from './ModalEdicaoItem';
+import { toast } from 'react-toastify';
 
 ResumoPedido.propTypes = {
     itemAdicionado: PropTypes.object.isRequired,
@@ -10,6 +12,8 @@ ResumoPedido.propTypes = {
 
 export function ResumoPedido({ itemAdicionado }) {
     const [ itensPedido, setItensPedido ] = useState([]);
+    const [ activeModalEdicaoItem, setActiveModalEdicaoItem ] = useState(false);
+    const [ itemParaEdicao, setItemParaEdicao ] = useState({});
 
     useEffect(() => {
         if (itemAdicionado.quantidade) {
@@ -22,6 +26,22 @@ export function ResumoPedido({ itemAdicionado }) {
         }
     }, [itemAdicionado]);
 
+    const atualizaItem = (item) => {
+        const updateItens = [ ...itensPedido ];
+        const itensAtualizados = updateItens.map((i) => {
+            if(i.id == item.id) {
+                return item
+            } else {
+                return i
+            }
+        })
+        setItensPedido(itensAtualizados);
+        setActiveModalEdicaoItem(!activeModalEdicaoItem);
+        toast.success('Item editado', {
+            autoClose: 2000,
+        });
+    }
+
     const deleteItem = (id) => {
         const itens = [ ...itensPedido ];
         const deleteItens = itens.filter((item) => {
@@ -31,8 +51,18 @@ export function ResumoPedido({ itemAdicionado }) {
         setItensPedido(deleteItens);
     };
 
+    const editaItem = (item) => {
+        setItemParaEdicao(item)
+    }
+
     return (
         <div className="resumoPedido">
+            <ModalEdicaoItem 
+                isOpen={activeModalEdicaoItem}
+                closeModal={() => setActiveModalEdicaoItem(!activeModalEdicaoItem)}
+                itemEditado={itemParaEdicao}
+                atualizacaoDoItem={atualizaItem}
+            />
             <div className="clientePedido">
                 <div className="dadosEntrega">
                     <p className='nomeClienteEntrega'>Guilherme Rabelo</p>
@@ -51,8 +81,9 @@ export function ResumoPedido({ itemAdicionado }) {
                         <tbody>
                             <tr>
                                 <th style={{ width: "10%"}}>Qtd</th>
-                                <th style={{ width: "70%"}}>Item</th>
+                                <th style={{ width: "60%"}}>Item</th>
                                 <th style={{ width: "10%"}}>Valor</th>
+                                <th style={{ width: "10%"}}></th>
                                 <th style={{ width: "10%"}}></th>
                             </tr>
                             {itensPedido.map((item, index) => {
@@ -65,6 +96,15 @@ export function ResumoPedido({ itemAdicionado }) {
                                             {item.doisSabores && `${item.sigla}-${item.option2.sabor}`}
                                         </td>
                                         <td>{item.valor}</td>
+                                        <td>
+                                            <BsPencilSquare
+                                                className="btn-edit"
+                                                onClick={() => {
+                                                    setActiveModalEdicaoItem(true)
+                                                    editaItem(item)
+                                                }}
+                                            />
+                                        </td>
                                         <td>
                                             <BsBackspace
                                                 className="btn-delete"

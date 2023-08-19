@@ -253,16 +253,16 @@ export function FormPizza ({ subtotal, pizzaAdd, limpaItem, setLimpaItem }) {
         const updatePizza = {...pizza};
         updatePizza[optionAdicionais].adicionais = adicionais;
         
-        setPizza(updatePizza)
-        atualizaValorUnitario(updatePizza)
-        setLimpaItem(false)
+        setPizza(updatePizza);
+        atualizaValorUnitario(updatePizza);
+        setLimpaItem(false);
     }
 
     const selecionaAdicionais = (option) => {
         const adicionaisPizza = pizza[option].adicionais;
 
         setAdicionaisSelecionados(adicionaisPizza);
-        setLimpaItem(false)
+        setLimpaItem(false);
     }
 
     return (

@@ -5,8 +5,8 @@ import { api } from '../lib/api';
 import { useEffect, useState } from 'react'
 
 Adicionais.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool,
+    closeModal: PropTypes.func,
     selecaoDeAdicionais: PropTypes.func,
     adicionaisPadrao: PropTypes.array,
   };
@@ -14,6 +14,11 @@ Adicionais.propTypes = {
 export function Adicionais({ isOpen, closeModal, selecaoDeAdicionais, adicionaisPadrao }) {
     const [ radioAdicionais, setRadioAdicionais ] = useState([]);
     const [ adicionaisSelecionados, setAdicionaisSelecionados ] = useState(adicionaisPadrao || []);
+
+    useEffect(() => {
+        console.log("adicionaisSelecionados:", adicionaisSelecionados);
+        // Qualquer ação adicional que você precisa realizar com os adicionais selecionados
+    }, [adicionaisSelecionados]);
 
     useEffect(() => {
         setAdicionaisSelecionados(adicionaisPadrao || []);
@@ -47,9 +52,9 @@ export function Adicionais({ isOpen, closeModal, selecaoDeAdicionais, adicionais
                 pastel: event.target.getAttribute('data-vl_pastel'),
                 geral: event.target.getAttribute('data-vl_geral'),
             };
-            
             updateAdicionais.push(novoAdicional);
 
+            console.log('update', updateAdicionais)
             setAdicionaisSelecionados(updateAdicionais);
         } else {
             const deleteAdicional = updateAdicionais.filter((adicional) => {
@@ -61,6 +66,7 @@ export function Adicionais({ isOpen, closeModal, selecaoDeAdicionais, adicionais
     }
 
     const confirmaSelecaoDeAdicionais = () => {
+        console.log(adicionaisSelecionados)
         selecaoDeAdicionais(adicionaisSelecionados)
     }
 
@@ -73,9 +79,8 @@ export function Adicionais({ isOpen, closeModal, selecaoDeAdicionais, adicionais
                 </div>
                 <div className="adicionaisOptions">
                     {radioAdicionais.map((adicional, index) => {
-
                         const isChecked = adicionaisSelecionados.some((i) => i.idadicional == adicional.idadicional);
-                        
+
                         return (
                             <div className="containerRadio" key={index}>
                                 <input 
